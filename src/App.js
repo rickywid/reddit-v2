@@ -10,7 +10,7 @@ class App extends Component {
     super();
 
     this.state = {
-      subreddits: ['webdev', 'cscareerquestions', 'learnprogramming', 'javascript', 'python'],
+      subreddits: [],
       subredditsData: []
     }
   }
@@ -20,31 +20,36 @@ class App extends Component {
   }
 
   getData() {
+    let subs = JSON.parse(localStorage.getItem("subreddits"));
+
     const fetch = new fetchReddit();
 
-    fetch.getData(this.state.subreddits).then(subredditsData =>{
+    fetch.getData(subs).then(subredditsData =>{
       this.setState({ subredditsData });
     })
   }
 
   updateSubReddit(subreddits) {
-    this.setState({ subreddits }, ()=>this.getData())
+    localStorage.setItem("subreddits", JSON.stringify(subreddits));
+    let subs = JSON.parse(localStorage.getItem("subreddits"));
+
+    this.getData(subs);
   }
 
   render() {
     return (
       <div className="App">
         <div className="subreddit-wrap">
-          {this.state.subreddits.map((subreddit, key)=>{
+          {JSON.parse(localStorage.getItem("subreddits")).map((subreddit, key)=>{
             return <SubReddit 
                       key={key} 
                       id={key}
                       data={this.state.subredditsData[key]} 
-                      data2={this.state.subreddits}
+                      data2={JSON.parse(localStorage.getItem("subreddits"))}
                       updateSubs={this.updateSubReddit.bind(this)}
                   />
           })}
-          <SettingsTab subreddits={this.state.subreddits} updateSubs={this.updateSubReddit.bind(this)}/>
+          <SettingsTab subreddits={JSON.parse(localStorage.getItem("subreddits"))} updateSubs={this.updateSubReddit.bind(this)}/>
         </div>
       </div>
     );

@@ -14,6 +14,10 @@ class SettingsTab extends Component {
     this.setState({ updatedSubs: this.props.subreddits},()=>console.log(this.state.updatedSubs))
   }
 
+  static getDerivedStateFromProps(nextProps, prevProps) {
+    return { updatedSubs: nextProps.subreddits }
+  }
+
   openSettings() {
     this.setState({ 
       isOpen: !this.state.isOpen 
@@ -58,7 +62,6 @@ class SettingsTab extends Component {
   }
 
   render() {
-
     if(this.state.isOpen) {
       return (
         <div className="new-sub">
