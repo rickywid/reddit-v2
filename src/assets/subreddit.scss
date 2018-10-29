@@ -1,12 +1,23 @@
 .subreddit-wrap {
 	display: flex;
+	flex-wrap: wrap;
+
+	.subreddit {
+		flex-basis: 33%;
+	}
 
 	.subreddit-topics {
 		padding: 0 0.5rem 0 0;
 		.subreddit-topic {
 		    list-style: none;
 		    margin-bottom: 0.5rem;
-		    color: grey;
+		}
+		small {
+			color: #d14d4d;
+		}
+		.subreddit-topic__link {
+			color: #6f6f6f;
+			text-decoration: none;
 		}
 	}
 }

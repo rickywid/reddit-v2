@@ -22,13 +22,25 @@ class SettingsTab extends Component {
   }
 
   handleChange(e) {
-    console.log(this.state)
-    let x = this.state.updatedSubs;
-    x[e.target.name] = e.target.value;
+    let updatedSubsCopy = this.state.updatedSubs;
+    updatedSubsCopy[e.target.name] = e.target.value;
 
-    this.setState({ updatedSubs: x}, ()=>{
-      console.log(this.state.updatedSubs)
+    this.setState({ updatedSubs: updatedSubsCopy}, ()=>{
     })
+  }
+
+  addInput() {
+    let updatedSubsCopy = this.state.updatedSubs;
+    updatedSubsCopy.push("subreddit");
+
+    this.setState({ updatedSubs: updatedSubsCopy});
+  }
+
+  deleteInput(key) {
+    let updatedSubsCopy = this.state.updatedSubs;
+    updatedSubsCopy.splice(key, 1);
+
+    this.setState({ updatedSubs: updatedSubsCopy});
   }
 
   displayInput(subreddit, key) {
@@ -37,13 +49,12 @@ class SettingsTab extends Component {
         <label>r/
           <input name={key} value={this.state.updatedSubs[key]} onChange={this.handleChange.bind(this)}/>
         </label>
-        <input type="checkbox" />
+        <button onClick={()=>this.deleteInput(key)}>remove</button>
       </div>
     )
   }
 
   saveSubs() {
-    console.log(this.props)
     this.props.updateSubs(this.state.updatedSubs);
   }
 
@@ -53,8 +64,7 @@ class SettingsTab extends Component {
       <div className={`settings-tab ${this.state.isOpen ? 'open' : ''}`}>
         <span onClick={()=>this.openSettings()} className="settings-tab__icon">O</span>
         {this.state.updatedSubs.map(this.displayInput.bind(this))}
-        <button>Add</button>
-        <button>Delete</button>
+        <button onClick={this.addInput.bind(this)}>Add</button>
         <button onClick={()=>this.saveSubs()}>Save</button>
       </div>
     );
