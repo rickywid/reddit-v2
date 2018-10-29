@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import fetchReddit from './services/fetchReddit';
+import SubReddit from './components/subReddit';
+import SettingsTab from './components/settingsTab';
 import './App.scss';
 
 class App extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      subreddits: ['webdev', 'cscareerquestions', 'learnprogramming', 'javascript', 'python'],
+      subredditsData: []
+    }
+  }
+
+  componentDidMount() {
+    const fetch = new fetchReddit();
+
+    fetch.getData(this.state.subreddits).then(subredditsData =>{
+      this.setState({ subredditsData });
+    })
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="subreddit-wrap">
+          {this.state.subreddits.map((subreddit, key)=>{
+            return <SubReddit key={key} data={this.state.subredditsData[key]}/>
+          })}
+          <SettingsTab subreddits={this.state.subreddits} />
+        </div>
       </div>
     );
   }

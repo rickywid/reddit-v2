@@ -1,0 +1,20 @@
+.settings-tab {
+    position: fixed;
+    bottom: 0;
+    right: -937px;
+    background: orange;
+    padding: 1rem;	
+    transition: right .2s;
+
+
+	.settings-tab__icon {
+		position: absolute;
+		top: 0;
+		left: -12px;
+		background: orange;
+	}
+}
+
+.settings-tab.open {
+	right: 0;
+}
