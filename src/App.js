@@ -16,20 +16,32 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
     const fetch = new fetchReddit();
 
     fetch.getData(this.state.subreddits).then(subredditsData =>{
       this.setState({ subredditsData });
     })
   }
+
+  updateSubReddit(subreddits) {
+    this.setState({ subreddits }, ()=>this.getData())
+  }
+
   render() {
     return (
       <div className="App">
         <div className="subreddit-wrap">
           {this.state.subreddits.map((subreddit, key)=>{
-            return <SubReddit key={key} data={this.state.subredditsData[key]}/>
+            return <SubReddit 
+                      key={key} 
+                      data={this.state.subredditsData[key]} 
+                  />
           })}
-          <SettingsTab subreddits={this.state.subreddits} />
+          <SettingsTab subreddits={this.state.subreddits} updateSubs={this.updateSubReddit.bind(this)}/>
         </div>
       </div>
     );
