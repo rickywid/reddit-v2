@@ -38,7 +38,10 @@ class App extends Component {
           {this.state.subreddits.map((subreddit, key)=>{
             return <SubReddit 
                       key={key} 
+                      id={key}
                       data={this.state.subredditsData[key]} 
+                      data2={this.state.subreddits}
+                      updateSubs={this.updateSubReddit.bind(this)}
                   />
           })}
           <SettingsTab subreddits={this.state.subreddits} updateSubs={this.updateSubReddit.bind(this)}/>

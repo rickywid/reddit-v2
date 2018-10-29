@@ -6,6 +6,14 @@
 		flex-basis: 33%;
 	}
 
+	.subreddit-title button {
+		display: none;
+	}
+
+	.subreddit:hover button {
+		display: inline-block;
+	}
+
 	.subreddit-topics {
 		padding: 0 0.5rem 0 0;
 		.subreddit-topic {
