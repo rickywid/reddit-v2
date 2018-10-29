@@ -16,7 +16,6 @@ class SettingsTab extends Component {
 
   openSettings() {
     this.setState({ 
-      updatedSubs: [],
       isOpen: !this.state.isOpen 
     });
   }
@@ -36,20 +35,20 @@ class SettingsTab extends Component {
     this.setState({ updatedSubs: updatedSubsCopy});
   }
 
-  deleteInput(key) {
+  deleteInput(id) {
     let updatedSubsCopy = this.state.updatedSubs;
-    updatedSubsCopy.splice(key, 1);
+    updatedSubsCopy.splice(id, 1);
 
-    this.setState({ updatedSubs: updatedSubsCopy});
+    this.setState({ updatedSubs: updatedSubsCopy}, ()=> this.props.updateSubs(this.state.updatedSubs));    
   }
 
   displayInput(subreddit, key) {
     return (
-      <div key={key}>
-        <label>r/
-          <input name={key} value={this.state.updatedSubs[key]} onChange={this.handleChange.bind(this)}/>
+      <div className="new-sub__wrap" key={key}>
+        <label className="new-sub__label" >r/
+          <input className="new-sub__input" name={key} value={this.state.updatedSubs[key]} onChange={this.handleChange.bind(this)}/>
         </label>
-        <button onClick={()=>this.deleteInput(key)}>remove</button>
+        <img onClick={()=>this.deleteInput(key)} src="https://i.imgur.com/N0Ho5Va.png" />
       </div>
     )
   }
@@ -60,14 +59,18 @@ class SettingsTab extends Component {
 
   render() {
 
-    return (
-      <div className={`settings-tab ${this.state.isOpen ? 'open' : ''}`}>
-        <span onClick={()=>this.openSettings()} className="settings-tab__icon">O</span>
-        {this.state.updatedSubs.map(this.displayInput.bind(this))}
-        <button onClick={this.addInput.bind(this)}>Add</button>
-        <button onClick={()=>this.saveSubs()}>Save</button>
-      </div>
-    );
+    if(this.state.isOpen) {
+      return (
+        <div className="new-sub">
+          {this.state.updatedSubs.map(this.displayInput.bind(this))}
+          <button className="btn btn--add" onClick={this.addInput.bind(this)}>Add</button>
+          <button className="btn btn--save" onClick={()=>this.saveSubs()}>Save</button>
+          <button className="btn btn--close" onClick={()=>this.openSettings()}>close</button>
+        </div>
+      );      
+    } else {
+      return <button className="settings-btn" onClick={()=>this.openSettings()}>+ Add</button>
+    }
   }
 }
 

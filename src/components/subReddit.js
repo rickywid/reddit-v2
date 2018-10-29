@@ -10,7 +10,7 @@ class SubReddit extends Component {
   }
 
   componentDidMount() {
-    this.setState({ updatedSubs: this.props.data2},()=>console.log(this.state.updatedSubs))
+    this.setState({ updatedSubs: this.props.data2})
   }
     
   displayLinks(data, key) {
