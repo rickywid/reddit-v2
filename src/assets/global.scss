@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
 body {
 	padding: 0 5rem;
+	font-family: 'Raleway', sans-serif;
+	background: black;
+}
+
+a {
+	color: red;
+	text-decoration: none;
 }
 
 .btn {

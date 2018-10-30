@@ -46,7 +46,6 @@ class App extends Component {
                       id={key}
                       data={this.state.subredditsData[key]} 
                       data2={JSON.parse(localStorage.getItem("subreddits"))}
-                      updateSubs={this.updateSubReddit.bind(this)}
                   />
           })}
           <SettingsTab subreddits={JSON.parse(localStorage.getItem("subreddits"))} updateSubs={this.updateSubReddit.bind(this)}/>
