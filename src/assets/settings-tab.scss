@@ -1,6 +1,8 @@
+@import '../assets/variables';
+
 .new-sub {
 	position: fixed;
-    background: #ff8d8d;
+    background: rgba(255,255,255,0.1);
     padding: 1rem;
     border-radius: 4px;	
     color: white;
@@ -15,7 +17,8 @@
     
     .new-sub__wrap {
     	display: flex;
-    	align-content: center;
+    	align-items: center;
+        margin-bottom: 10px;
 
     	img {
     		height: 20px;
@@ -24,7 +27,6 @@
 
     .new-sub__input {
     	margin-right: 10px;
-    	margin-bottom: 10px;
     	border: none;
     	border-radius: 4px;
     	padding: 4px;
@@ -33,7 +35,7 @@
 }
 .settings-btn {
     position: fixed;
-    background: #ff8d8d;
+    background: none;
     width: 200px;
     font-weight: bold;
     color: white;
@@ -44,8 +46,12 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     top: 0;
-    right: 140px;  
+    right: 50px;  
 	-webkit-box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);
 	-moz-box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);
-	box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);      
+	box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);     
+
+    &:hover {
+        cursor: pointer;
+    } 
 }

@@ -13,7 +13,7 @@
 		color: white;
 
 		&:hover {
-			color: $grey;
+			color: $dark-grey;
 		}
 
 		h2 button {
@@ -26,30 +26,31 @@
 	}
 
 	.subreddit-topics {
-		padding: 0 0.5rem 0 0;
+		padding: 0 2rem 0 0;
 		.subreddit-topic {
 		    list-style: none;
 		    margin-bottom: 0.5rem;
 		}
 		small {
-			color: #d14d4d;
+			color: $dark-green;
 		}
 		.subreddit-topic__link {
-			color: #c1c1c1;
+			color: $dark-grey;
 			text-decoration: none;
 
 			&.stickied {
-				color: #3bdc3b;
+				color: $sewer-green;
 				font-weight: bold;
 
 				&:hover{
-					color: green;
+					color: #ceef4a;
 				}
 			}
 		}
 
 		.subreddit-topic__link:hover {
-			color: red;
+			color: $white;
+			font-weight: bold;
 		}
 	}
 }

@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog, faPlus, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faCog, faPlus, faCheck, faTimes);
+
 
 class SettingsTab extends Component {
   constructor(props) {
@@ -11,7 +17,7 @@ class SettingsTab extends Component {
   }
 
   componentDidMount() {
-    this.setState({ updatedSubs: this.props.subreddits},()=>console.log(this.state.updatedSubs))
+    this.setState({ updatedSubs: this.props.subreddits});
   }
 
   static getDerivedStateFromProps(nextProps, prevProps) {
@@ -43,7 +49,7 @@ class SettingsTab extends Component {
     let updatedSubsCopy = this.state.updatedSubs;
     updatedSubsCopy.splice(id, 1);
 
-    this.setState({ updatedSubs: updatedSubsCopy}, ()=> this.props.updateSubs(this.state.updatedSubs));    
+    this.setState({ updatedSubs: updatedSubsCopy}, ()=> this.props.updateSubs(this.state.updatedSubs, 'delete'));    
   }
 
   displayInput(subreddit, key) {
@@ -52,13 +58,13 @@ class SettingsTab extends Component {
         <label className="new-sub__label" >r/
           <input className="new-sub__input" name={key} value={this.state.updatedSubs[key]} onChange={this.handleChange.bind(this)}/>
         </label>
-        <img onClick={()=>this.deleteInput(key)} src="https://i.imgur.com/N0Ho5Va.png" />
+        <FontAwesomeIcon onClick={()=>this.deleteInput(key)} className="icon icon--remove" icon="times" />
       </div>
     )
   }
 
   saveSubs() {
-    this.props.updateSubs(this.state.updatedSubs);
+    this.props.updateSubs(this.state.updatedSubs, 'add');
   }
 
   render() {
@@ -66,13 +72,13 @@ class SettingsTab extends Component {
       return (
         <div className="new-sub">
           {this.state.updatedSubs.map(this.displayInput.bind(this))}
-          <button className="btn btn--add" onClick={this.addInput.bind(this)}>Add</button>
-          <button className="btn btn--save" onClick={()=>this.saveSubs()}>Save</button>
+          <button className="btn btn--add" onClick={this.addInput.bind(this)}><FontAwesomeIcon className="icon icon--add" icon="plus" /></button>
+          <button className="btn btn--save" onClick={()=>this.saveSubs()}><FontAwesomeIcon className="icon icon--save" icon="check" /></button>
           <button className="btn btn--close" onClick={()=>this.openSettings()}>close</button>
         </div>
       );      
     } else {
-      return <button className="settings-btn" onClick={()=>this.openSettings()}>+ Add</button>
+      return <button className="settings-btn" onClick={()=>this.openSettings()}><FontAwesomeIcon className="icon" icon="cog" />Settings</button>
     }
   }
 }
