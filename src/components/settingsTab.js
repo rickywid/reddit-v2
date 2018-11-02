@@ -64,6 +64,7 @@ class SettingsTab extends Component {
   }
 
   saveSubs() {
+    this.setState({ isOpen: false });
     this.props.updateSubs(this.state.updatedSubs, 'add');
   }
 

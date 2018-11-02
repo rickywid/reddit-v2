@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage, faStar, faVideo } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faImage, faStar, faVideo);
 
 class SubReddit extends Component {
   constructor(props) {
@@ -17,6 +22,9 @@ class SubReddit extends Component {
   displayLinks(data, key) {
 
     const isStickied = data.data.stickied ? 'stickied' : '';
+    const isGilded = data.data.gilded > 0 ? <FontAwesomeIcon className="icon-link icon--star" icon="star" /> : '';
+    const isImage = data.data.link_flair_text === "image" || data.data.link_flair_text === "Picture" ? <FontAwesomeIcon className="icon-link icon--image" icon="image" /> : '';
+    const isVideo = data.data.is_video === true ? <FontAwesomeIcon className="icon-link icon--video" icon="video" /> : '';
 
     return (
       <li key={key} className="subreddit-topic">
@@ -24,6 +32,9 @@ class SubReddit extends Component {
         <small> by <a href={`https://reddit.com/u/${data.data.author}`}>{data.data.author}</a> </small>
         <small>{moment(data.data.created_utc * 1000).fromNow()}</small>
         <small> <a href={`https://reddit.com${data.data.permalink}`}>{data.data.num_comments} comments</a></small>
+        {isGilded}
+        {isImage}
+        {isVideo}
       </li>
     )
   }

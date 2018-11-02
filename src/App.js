@@ -98,6 +98,9 @@ class App extends Component {
     }
     return (
       <div className="App">
+      <nav>
+        <SettingsTab subreddits={JSON.parse(localStorage.getItem("subreddits"))} updateSubs={this.updateSubReddit.bind(this)}/>
+      </nav>
         <div className="subreddit-wrap">
           {JSON.parse(localStorage.getItem("subreddits")).map((subreddit, key)=>{
             return <SubReddit 
@@ -107,7 +110,6 @@ class App extends Component {
                       data2={JSON.parse(localStorage.getItem("subreddits"))}
                   />
           })}
-          <SettingsTab subreddits={JSON.parse(localStorage.getItem("subreddits"))} updateSubs={this.updateSubReddit.bind(this)}/>
         </div>
       </div>
     );

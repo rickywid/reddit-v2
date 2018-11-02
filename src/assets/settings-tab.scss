@@ -1,19 +1,17 @@
 @import '../assets/variables';
 
 .new-sub {
-	position: fixed;
-    background: rgba(255,255,255,0.1);
+    position: fixed;
     padding: 1rem;
-    border-radius: 4px;	
-    color: white;
-    font-weight: bold;
     top: 0;
+    color: white;
     right: 140px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-	-webkit-box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);
-	-moz-box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);
-	box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);    
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: linear-gradient(311deg, #4c74a7 0%, #57c698 100%);
+    font-weight: bold;
     
     .new-sub__wrap {
     	display: flex;
@@ -33,23 +31,18 @@
     	color: #4d4d4d;
     }
 }
+
 .settings-btn {
-    position: fixed;
     background: none;
-    width: 200px;
+    /* width: 200px; */
     font-weight: bold;
     color: white;
-    padding: 10px;
+    padding: 5px 10px;
     outline: none;
-    border: none;
+    border: 1px solid white;
     border-radius: 4px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    top: 0;
-    right: 50px;  
-	-webkit-box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);
-	-moz-box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);
-	box-shadow: 7px 7px 17px -7px rgba(0,0,0,0.45);     
 
     &:hover {
         cursor: pointer;

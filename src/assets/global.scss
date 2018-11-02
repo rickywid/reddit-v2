@@ -16,6 +16,11 @@ h2 {
     font-size: 20px;
 }
 
+nav {
+    text-align: right;
+    min-height: 30px;
+}
+
 .btn {
 	// width: 50px;
     outline: none;
@@ -36,6 +41,8 @@ h2 {
     background: $red;
 }
 
+.icon-link { color: white; font-size: 10px; margin: 0 2px 0 8px; }
+
 .icon:hover {
     cursor: pointer;
 }
@@ -43,3 +50,4 @@ h2 {
 .icon--remove { color: $red; }
 .icon--add { color: $yellow; }
 .icon--save { color: $light-green; }
+.icon--star { color: orange; }
