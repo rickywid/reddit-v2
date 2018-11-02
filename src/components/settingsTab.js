@@ -40,7 +40,7 @@ class SettingsTab extends Component {
 
   addInput() {
     let updatedSubsCopy = this.state.updatedSubs;
-    updatedSubsCopy.push("subreddit");
+    updatedSubsCopy.push("");
 
     this.setState({ updatedSubs: updatedSubsCopy});
   }
@@ -56,7 +56,7 @@ class SettingsTab extends Component {
     return (
       <div className="new-sub__wrap" key={key}>
         <label className="new-sub__label" >r/
-          <input className="new-sub__input" name={key} value={this.state.updatedSubs[key]} onChange={this.handleChange.bind(this)}/>
+          <input className="new-sub__input" name={key} value={this.state.updatedSubs[key]} placeholder="subreddit" onChange={this.handleChange.bind(this)}/>
         </label>
         <FontAwesomeIcon onClick={()=>this.deleteInput(key)} className="icon icon--remove" icon="times" />
       </div>
@@ -79,7 +79,7 @@ class SettingsTab extends Component {
         </div>
       );      
     } else {
-      return <button className="settings-btn" onClick={()=>this.openSettings()}><FontAwesomeIcon className="icon" icon="cog" />Settings</button>
+      return <button className="settings-btn" onClick={()=>this.openSettings()}><FontAwesomeIcon className="icon icon--cog" icon="cog" />Settings</button>
     }
   }
 }

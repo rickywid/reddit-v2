@@ -4,7 +4,7 @@
 body {
 	padding: 0 5rem;
 	font-family: 'Raleway', sans-serif;
-	background: black;
+	background: $bg;
 }
 
 a {
@@ -17,8 +17,9 @@ h2 {
 }
 
 nav {
-    text-align: right;
     min-height: 30px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .btn {
@@ -47,7 +48,9 @@ nav {
     cursor: pointer;
 }
 
-.icon--remove { color: $red; }
+.icon--remove { color: white; }
+.icon--remove:hover { color: $red; }
 .icon--add { color: $yellow; }
 .icon--save { color: $light-green; }
 .icon--star { color: orange; }
+.icon--cog { margin-right: 10px; }
