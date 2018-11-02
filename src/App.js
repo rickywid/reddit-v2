@@ -77,19 +77,22 @@ class App extends Component {
     if(this.state.showInitialSetup) {
       return (
         <div className="start">
-          <h2>Add your favourite subreddits</h2>
-          {(this.state.subreddits).map((item, key)=>{
-            return (
-              <div className="new-sub__wrap">
-                <label className="new-sub__label" >r/
-                  <input name={key} className="new-sub__input" onChange={this.handleChange.bind(this)} value={this.state.subreddits[key]} />
-                </label>
-              </div>
-            )
-          })}
-
-          <button className="btn btn--add"><FontAwesomeIcon onClick={()=> this.addSubReddit()}className="icon icon--add" icon="plus" /></button>
-          <button className="btn btn--save"><FontAwesomeIcon onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')} className="icon icon--save" icon="check" /></button>
+          <div className="start__content">
+            <h2>Start adding some of your favourite subreddits</h2>
+            {(this.state.subreddits).map((item, key)=>{
+              return (
+                <div className="start__newsub">
+                  <label className="new-sub__label" >r/
+                    <input name={key} className="new-sub__input new-sub__input--start" onChange={this.handleChange.bind(this)} value={this.state.subreddits[key]} />
+                  </label>
+                </div>
+              )
+            })}
+            <div className="button-wrap">
+              <button className="btn btn--add"><FontAwesomeIcon onClick={()=> this.addSubReddit()}className="icon icon--add" icon="plus" /></button>
+              <button className="btn btn--save"><FontAwesomeIcon onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')} className="icon icon--save" icon="check" /></button>
+            </div>
+          </div>
         </div>
       )
     }
