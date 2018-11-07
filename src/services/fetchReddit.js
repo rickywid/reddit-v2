@@ -1,7 +1,7 @@
 export default class fetchReddit {
 
 	getSubreddit(subreddit){
-		return fetch(`http://www.reddit.com/r/${subreddit}.json`)
+		return fetch(`https://www.reddit.com/r/${subreddit}.json`)
 		  .then(function(response) {
 		    return response.json();
 		  })
