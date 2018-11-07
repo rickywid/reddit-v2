@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/reddit-v2/static/css/main.756f64c9.chunk.css"
   },
   {
-    "revision": "fbc523a3be83b9f3418476c769bbe333",
+    "revision": "939cff464a31fd870bcd4b9e0c0f6e75",
     "url": "/reddit-v2/index.html"
   }
 ];
