@@ -28,7 +28,7 @@ class SubReddit extends Component {
 
     return (
       <li key={key} className="subreddit-topic">
-        <a className={`subreddit-topic__link ${isStickied}`} href={data.data.url} target="_blank">{data.data.title}</a>
+        <a className={`subreddit-topic__link ${isStickied}`} href={data.data.url} target="_blank" rel="noopener noreferrer">{data.data.title}</a>
         <small> by <a href={`https://reddit.com/u/${data.data.author}`}>{data.data.author}</a> </small>
         <small>{moment(data.data.created_utc * 1000).fromNow()}</small>
         <small> <a href={`https://reddit.com${data.data.permalink}`}>{data.data.num_comments} comments</a></small>
@@ -41,7 +41,7 @@ class SubReddit extends Component {
 
   render() {
 
-    const { data, id } = this.props;
+    const { data } = this.props;
 
     if(!this.props.data) {
       return <div>loading</div>
