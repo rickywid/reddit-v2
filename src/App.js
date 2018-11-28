@@ -15,6 +15,10 @@ class App extends Component {
   constructor() {
     super();
 
+    this.handleChange = this.handleChange.bind(this);
+    this.addSubReddit = this.addSubReddit.bind(this);
+    this.updateSubReddit = this.updateSubReddit.bind(this);
+
     this.state = {
       subreddits: [''],
       subredditsData: [],
@@ -25,52 +29,85 @@ class App extends Component {
   componentDidMount() {
 
     // if there is already saved data in local storage, bypass initial screen
-    if(JSON.parse(localStorage.getItem("subreddits")) !== null) {
-      console.log('mounted')
-      this.setState({ showInitialSetup: false }, ()=>this.getData())
-    };
-
     // if local storage is empty or not items set then show initial screen
+    if(JSON.parse(localStorage.getItem("subreddits")) !== null) {
 
+      this.setState({ showInitialSetup: false }, ()=>this.getData());
+
+    };
   }
 
-  getData() {
+  async getData() {
 
-    let subs = JSON.parse(localStorage.getItem("subreddits"));
+    const subs = JSON.parse(localStorage.getItem("subreddits"));
     const fetch = new fetchReddit();
+    const data = await fetch.getData(subs);
 
-    fetch.getData(subs).then(subredditsData =>{
-      this.setState({ subredditsData });
-    })
+    this.setState({ subredditsData: data });
   }
 
   updateSubReddit(subreddits, type) {
     
     // if local storage is empty, show initial screen & reset state
     if(type === 'delete' && subreddits.length === 0) {
-        localStorage.removeItem("subreddits");
-        this.setState({ showInitialSetup: true, subreddits: [""] })
-
-        return;
+        
+      localStorage.removeItem("subreddits");
+      
+      this.setState({ 
+        showInitialSetup: true, 
+        subreddits: [""] 
+      });
+    
+    return;
+    
     } 
 
     // if there is local storage has data then update local storage and fetch data
     localStorage.setItem("subreddits", JSON.stringify(subreddits));
-    this.setState({ showInitialSetup: false }, ()=> this.getData(JSON.parse(localStorage.getItem("subreddits"))))      
+
+    this.setState({ 
+      showInitialSetup: false 
+    }, () => {
+      this.getData(JSON.parse(localStorage.getItem("subreddits")));
+    });
   }
 
   handleChange(e) {
-    let subreddits = this.state.subreddits;
-    subreddits[e.target.name] = e.target.value; 
 
-    this.setState({ subreddits }, ()=> console.log(this.state.subreddits));
+    const index = e.target.name;
+    const value = e.target.value;
+
+    this.setState( prevState => {
+      
+      const state = { ...prevState };
+
+      state['subreddits'][index] = value;
+
+      return state;
+    })
   }
 
   addSubReddit() {
-    let newSet = this.state.subreddits;
-    newSet.push('');
 
-    this.setState({ subreddits:  newSet });
+    this.setState( prevState => {
+
+      const state = { ...prevState };
+
+      state['subreddits'] = state['subreddits'].concat(['']);      
+
+      return state;
+    })
+  }
+
+  displaySubs() {
+    return JSON.parse(localStorage.getItem("subreddits")).map((subreddit, key)=>{
+      return <SubReddit 
+                key={key} 
+                id={key}
+                data={this.state.subredditsData[key]} 
+                data2={JSON.parse(localStorage.getItem("subreddits"))}
+            />
+    })    
   }
 
   render() {
@@ -83,14 +120,26 @@ class App extends Component {
               return (
                 <div className="start__newsub">
                   <label className="new-sub__label" >r/
-                    <input name={key} className="new-sub__input new-sub__input--start" onChange={this.handleChange.bind(this)} value={this.state.subreddits[key]} />
+                    <input  name={key} 
+                            className="new-sub__input new-sub__input--start" 
+                            onChange={this.handleChange} 
+                            value={this.state.subreddits[key]} 
+                    />
                   </label>
                 </div>
               )
             })}
             <div className="button-wrap">
-              <button className="btn btn--add"><FontAwesomeIcon onClick={()=> this.addSubReddit()}className="icon icon--add" icon="plus" /></button>
-              <button className="btn btn--save"><FontAwesomeIcon onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')} className="icon icon--save" icon="check" /></button>
+              <button className="btn btn--add" 
+                      onClick={this.addSubReddit}
+              >
+                      <FontAwesomeIcon className="icon icon--add" icon="plus" />
+              </button>
+              <button className="btn btn--save" 
+                      onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}
+              >
+                      <FontAwesomeIcon className="icon icon--save" icon="check" />
+              </button>
             </div>
           </div>
         </div>
@@ -98,18 +147,13 @@ class App extends Component {
     }
     return (
       <div className="App">
-      <nav>
-        <SettingsTab subreddits={JSON.parse(localStorage.getItem("subreddits"))} updateSubs={this.updateSubReddit.bind(this)}/>
-      </nav>
+        <nav>
+          <SettingsTab  subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
+                        updateSubs={this.updateSubReddit}
+          />
+        </nav>
         <div className="subreddit-wrap">
-          {JSON.parse(localStorage.getItem("subreddits")).map((subreddit, key)=>{
-            return <SubReddit 
-                      key={key} 
-                      id={key}
-                      data={this.state.subredditsData[key]} 
-                      data2={JSON.parse(localStorage.getItem("subreddits"))}
-                  />
-          })}
+          {this.displaySubs()}
         </div>
       </div>
     );
