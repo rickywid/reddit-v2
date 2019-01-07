@@ -133,12 +133,12 @@ class App extends Component {
               <button className="btn btn--add" 
                       onClick={this.addSubReddit}
               >
-                      <FontAwesomeIcon className="icon icon--add" icon="plus" />
+                      <FontAwesomeIcon className="icon icon--add" icon="plus"/> Add subreddit
               </button>
               <button className="btn btn--save" 
                       onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}
               >
-                      <FontAwesomeIcon className="icon icon--save" icon="check" />
+                      <FontAwesomeIcon className="icon icon--save" icon="check" /> Done
               </button>
             </div>
           </div>

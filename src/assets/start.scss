@@ -12,7 +12,7 @@
     margin: auto;
 	color: white;
     text-align: center;
-    padding: 2rem 7rem;
+    padding: 2rem;
 
     .start__newsub {
     	margin-bottom: 10px;
@@ -20,13 +20,20 @@
 }
 
 .new-sub__input.new-sub__input--start {
-    width: 88%;
+    width: 85%;
     font-size: 24px;
     border-radius: 5px;
     border: 1px solid $light-grey;
     padding: 0.5rem;
+    color: #4dd1bf;
 }
 
 .button-wrap {
 	text-align: right;
+}
+
+@media only screen and (min-width: 600px) {
+    .start__content {
+        padding: 2rem 7rem;
+    }
 }

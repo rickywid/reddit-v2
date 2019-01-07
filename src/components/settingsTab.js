@@ -81,7 +81,7 @@ class SettingsTab extends Component {
     return (
       <div className="new-sub__wrap" key={key}>
         <label className="new-sub__label" >r/
-          <input className="new-sub__input" name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange}/>
+          <input className="new-sub__input" name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
         </label>
         <FontAwesomeIcon onClick={this.deleteInput.bind(this, key)} className="icon icon--remove" icon="times" />
       </div>
@@ -98,8 +98,8 @@ class SettingsTab extends Component {
       return (
         <div className="new-sub">
           {this.state.updatedSubs.map(this.displayInput.bind(this))}
-          <button className="btn btn--add" onClick={this.addInput}><FontAwesomeIcon className="icon icon--add" icon="plus" /></button>
-          <button className="btn btn--save" onClick={this.saveSubs}><FontAwesomeIcon className="icon icon--save" icon="check" /></button>
+          <button className="btn btn--add" onClick={this.addInput}><FontAwesomeIcon className="icon icon--add" icon="plus" /> Add Subreddit</button>
+          <button className="btn btn--save" onClick={this.saveSubs}><FontAwesomeIcon className="icon icon--save" icon="check" /> Done</button>
           <button className="btn btn--close" onClick={this.openSettings}>close</button>
         </div>
       );      

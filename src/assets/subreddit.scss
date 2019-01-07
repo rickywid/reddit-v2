@@ -5,7 +5,7 @@
 	flex-wrap: wrap;
 
 	.subreddit {
-		flex-basis: 33%;
+		flex-basis: 100%;
 		flex-grow: 1;
 	}
 
@@ -51,6 +51,23 @@
 
 		.subreddit-topic__link:hover {
 			color: $dirty-yellow;
+		}
+	}
+}
+
+
+@media only screen and (min-width: 800px) {
+	.subreddit-wrap {
+		.subreddit {
+			flex-basis: 50%;
+		}
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.subreddit-wrap {
+		.subreddit {
+			flex-basis: 33%;
 		}
 	}
 }

@@ -2,7 +2,8 @@
 @import '../assets/variables';
 
 body {
-	padding: 0 5rem;
+    padding: 0 1rem;
+    margin: 0;
 	font-family: 'Raleway', sans-serif;
 	background: $bg;
 }
@@ -32,6 +33,7 @@ nav {
     color: white;
     border-radius: 4px;
     font-weight: bold;
+    background: rgba(255,255,255,0.2);
 
     &:hover {
         cursor: pointer;
@@ -54,3 +56,9 @@ nav {
 .icon--save { color: $light-green; }
 .icon--star { color: orange; }
 .icon--cog { margin-right: 10px; }
+
+@media only screen and (min-width: 600px) {
+  body {
+    padding: 0 5rem;
+  }
+}
