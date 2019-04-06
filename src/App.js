@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import styled, { css } from 'styled-components';
+import { subreddits } from './data/data';
 
 library.add(faTimes);
 
@@ -14,7 +15,38 @@ const HeaderWrapper = styled.div`
   text-align: center;
 `
 const Card = styled.div`
+  border: 1px solid red;
+  flex: 1;
   text-align: center;
+`
+const SubredditSuggestionsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  border: 1px solid pink;
+  flex: 1;
+  flex-wrap: wrap;
+`
+const SubredditSuggestions = styled.div`
+  border: 1px solid orange;
+  flex-grow: 1;
+  flex-basis: 33%;
+`
+const SubredditCategory = styled.p`
+  color: red;
+`
+const SubredditList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;  
+`
+const SubredditItem = styled.li`
+  list-item: none;
+`
+
+const SectionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  border: 1px solid pink;
 `
 
 class App extends Component {
@@ -117,6 +149,17 @@ class App extends Component {
     })    
   }
 
+  renderList(list) {
+    return (
+      <SubredditSuggestions>
+        <SubredditCategory>{list.category_name}</SubredditCategory>
+        <SubredditList>
+          {list.subreddit.map(sub => <SubredditItem>{sub}</SubredditItem>)}   
+        </SubredditList>
+      </SubredditSuggestions>
+    )
+  }
+
   render() {
 
     return (
@@ -133,29 +176,34 @@ class App extends Component {
             <h1>Header Goes Over Here</h1>
             <h2>Subheader goes over here where you describe what your sites does</h2>
           </HeaderWrapper>
-          <Card>
-            <h2>Start adding some of your favourite subreddits</h2>
-            {(this.state.subreddits).map((item, key)=>{
-              return (
-                <div>
-                  <label>r/
-                    <input  name={key}
-                            onChange={this.handleChange} 
-                            value={this.state.subreddits[key]} 
-                    />
-                  </label>
-                </div>
-              )
-            })}
-            <div>
-              <Button primary onClick={this.addSubReddit}>
-                      <FontAwesomeIcon icon="plus"/> Add subreddit
-              </Button>
-              <Button onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}>
-                <FontAwesomeIcon className="icon icon--save" icon="check" /> Done
-              </Button>
-            </div>
-          </Card>
+          <SectionWrapper>
+            <Card>
+              <h2>Start adding some of your favourite subreddits</h2>
+              {(this.state.subreddits).map((item, key)=>{
+                return (
+                  <div>
+                    <label>r/
+                      <input  name={key}
+                              onChange={this.handleChange} 
+                              value={this.state.subreddits[key]} 
+                      />
+                    </label>
+                  </div>
+                )
+              })}
+              <div>
+                <Button primary onClick={this.addSubReddit}>
+                        <FontAwesomeIcon icon="plus"/> Add subreddit
+                </Button>
+                <Button onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}>
+                  <FontAwesomeIcon className="icon icon--save" icon="check" /> Done
+                </Button>
+              </div>
+            </Card>
+            <SubredditSuggestionsWrapper>
+                {subreddits.map(this.renderList)}
+            </SubredditSuggestionsWrapper>      
+          </SectionWrapper>
         </div>
           : 
         <div className="App">
