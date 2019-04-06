@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import fetchReddit from './services/fetchReddit';
 import SubReddit from './components/subReddit';
 import SettingsTab from './components/settingsTab';
-import './App.scss';
-
+import { Button } from './assets/styled-components/button';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import styled, { css } from 'styled-components';
 
 library.add(faTimes);
+
+const HeaderWrapper = styled.div`
+  text-align: center;
+`
+const Card = styled.div`
+  text-align: center;
+`
 
 class App extends Component {
 
@@ -111,17 +118,28 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.showInitialSetup) {
-      return (
-        <div className="start">
-          <div className="start__content">
+
+    return (
+      <div>
+
+        <nav>
+          reddit
+        </nav>
+
+        {this.state.showInitialSetup 
+          ? 
+        <div className="animated fadeIn">
+          <HeaderWrapper>
+            <h1>Header Goes Over Here</h1>
+            <h2>Subheader goes over here where you describe what your sites does</h2>
+          </HeaderWrapper>
+          <Card>
             <h2>Start adding some of your favourite subreddits</h2>
             {(this.state.subreddits).map((item, key)=>{
               return (
-                <div className="start__newsub">
-                  <label className="new-sub__label" >r/
-                    <input  name={key} 
-                            className="new-sub__input new-sub__input--start" 
+                <div>
+                  <label>r/
+                    <input  name={key}
                             onChange={this.handleChange} 
                             value={this.state.subreddits[key]} 
                     />
@@ -129,34 +147,30 @@ class App extends Component {
                 </div>
               )
             })}
-            <div className="button-wrap">
-              <button className="btn btn--add" 
-                      onClick={this.addSubReddit}
-              >
-                      <FontAwesomeIcon className="icon icon--add" icon="plus"/> Add subreddit
-              </button>
-              <button className="btn btn--save" 
-                      onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}
-              >
-                      <FontAwesomeIcon className="icon icon--save" icon="check" /> Done
-              </button>
+            <div>
+              <Button primary onClick={this.addSubReddit}>
+                      <FontAwesomeIcon icon="plus"/> Add subreddit
+              </Button>
+              <Button onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}>
+                <FontAwesomeIcon className="icon icon--save" icon="check" /> Done
+              </Button>
             </div>
+          </Card>
+        </div>
+          : 
+        <div className="App">
+          <nav>
+            <SettingsTab  subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
+                          updateSubs={this.updateSubReddit}
+            />
+          </nav>
+          <div>
+            {this.displaySubs()}
           </div>
         </div>
-      )
-    }
-    return (
-      <div className="App">
-        <nav>
-          <SettingsTab  subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
-                        updateSubs={this.updateSubReddit}
-          />
-        </nav>
-        <div className="subreddit-wrap">
-          {this.displaySubs()}
-        </div>
+        }
       </div>
-    );
+    )
   }
 }
 
