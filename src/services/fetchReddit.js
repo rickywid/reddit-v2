@@ -11,7 +11,6 @@ export default class fetchReddit {
 	}
 
 	getData(subreddits){
-		console.log(subreddits)
 		let promise = subreddits.map(subreddit=>{
 			return this.getSubreddit(subreddit);
 		});	

@@ -11,7 +11,7 @@ import { subreddits } from './data/data';
 
 
 import {
-  Form, Input, Icon, Button,
+  Form, Input, Icon, Button, notification
 } from 'antd';
 
 let id = 0;
@@ -22,24 +22,23 @@ const HeaderWrapper = styled.div`
   text-align: center;
 `
 const Card = styled.div`
-  border: 1px solid red;
   flex: 1;
-  text-align: center;
 `
 const SubredditSuggestionsWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  border: 1px solid pink;
   flex: 1;
   flex-wrap: wrap;
+  align-self: flex-start;
 `
 const SubredditSuggestions = styled.div`
-  border: 1px solid orange;
   flex-grow: 1;
   flex-basis: 33%;
+  padding: 0.5rem 0;
 `
 const SubredditCategory = styled.p`
   color: red;
+  font-weight: bold;
 `
 const SubredditList = styled.ul`
   list-style: none;
@@ -48,13 +47,35 @@ const SubredditList = styled.ul`
 `
 const SubredditItem = styled.li`
   list-item: none;
+  :hover {
+    color: #111;
+    cursor: pointer;
+  }
 `
-
+const SubredditSuggestHeader = styled.div`
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2rem;
+`
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  border: 1px solid pink;
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 6rem;
+  background: #f9f9f9;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+  padding: 2rem;
 `
+
+const openNotificationWithIcon = (type, label, sub, description) => {
+  notification[type]({
+    message: `${label}`,
+    description: <div dangerouslySetInnerHTML={{__html: `<p>${description}</p><a target="_blank" href='https://reddit.com/r/${sub}'>Preview</a>`}} />
+  });
+};
 
 class App extends Component {
 
@@ -66,7 +87,7 @@ class App extends Component {
     this.updateSubReddit = this.updateSubReddit.bind(this);
 
     this.state = {
-      subreddits: [''],
+      subreddits: [],
       subredditsData: [],
       showInitialSetup: true
     }
@@ -116,7 +137,6 @@ class App extends Component {
       if (!err) {
         const { keys, names } = values;
         localStorage.setItem("subreddits", JSON.stringify(names));
-        console.log(names)
         this.setState({ 
           subreddits: names,
           showInitialSetup: false
@@ -150,7 +170,7 @@ class App extends Component {
       
       this.setState({ 
         showInitialSetup: true, 
-        subreddits: [""] 
+        subreddits: [] 
       });
     
     return;
@@ -182,16 +202,9 @@ class App extends Component {
     })
   }
 
-  // addSubReddit() {
+  // addSubReddit(sub) {
 
-  //   this.setState( prevState => {
-
-  //     const state = { ...prevState };
-
-  //     state['subreddits'] = state['subreddits'].concat(['']);      
-
-  //     return state;
-  //   })
+  //   this.setState({ subreddits: [...this.state.subreddits, sub]}, () => console.log(this.state.subreddits))
   // }
 
   displaySubs() {
@@ -210,7 +223,11 @@ class App extends Component {
       <SubredditSuggestions>
         <SubredditCategory>{list.category_name}</SubredditCategory>
         <SubredditList>
-          {list.subreddit.map(sub => <SubredditItem>{sub}</SubredditItem>)}   
+          {list.subreddit.map((sub, index) => {
+            return (
+              <SubredditItem key={`${sub}${index}`} onClick={() => openNotificationWithIcon('info', sub.label, sub.sub, sub.description)}>{sub.sub}</SubredditItem>
+            )
+          })}   
         </SubredditList>
       </SubredditSuggestions>
     )
@@ -235,12 +252,13 @@ class App extends Component {
         sm: { span: 20, offset: 4 },
       },
     };
-    getFieldDecorator('keys', { initialValue: [] });
+
+    getFieldDecorator('keys', { initialValue: []});
     const keys = getFieldValue('keys');
     const formItems = keys.map((k, index) => (
       <Form.Item
         {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-        label={index === 0 ? 'Passengers' : ''}
+        label={index === 0 ? 'r/' : ''}
         required={false}
         key={k}
       >
@@ -249,10 +267,10 @@ class App extends Component {
           rules: [{
             required: true,
             whitespace: true,
-            message: "Please input passenger's name or delete this field.",
+            message: "Required",
           }],
         })(
-          <Input placeholder="passenger name" style={{ width: '60%', marginRight: 8 }} />
+          <Input placeholder="e.g: showerthoughts" style={{ width: '60%', marginRight: 8 }} />
         )}
         {keys.length > 1 ? (
           <Icon
@@ -266,7 +284,7 @@ class App extends Component {
     ));
 
     return (
-      <div>
+      <div style={{ padding: '2rem'}}>
 
         <nav>
           reddit
@@ -282,18 +300,17 @@ class App extends Component {
           <SectionWrapper>
             <Card>
               <h2>Start adding some of your favourite subreddits</h2>
-              {(this.state.subreddits).map((item, key)=>{
-                return (
-                  <div>
-                    <label>r/
-                      <input  name={key}
-                              onChange={this.handleChange} 
-                              value={this.state.subreddits[key]} 
-                      />
-                    </label>
-                  </div>
-                )
-              })}
+                  <Form onSubmit={this.handleSubmit}>
+                    {formItems}
+                    <Form.Item {...formItemLayoutWithOutLabel}>
+                      <Button type="dashed" onClick={this.add}>
+                        <Icon type="plus" /> Add field
+                      </Button>
+                    </Form.Item>
+                    <Form.Item {...formItemLayoutWithOutLabel}>
+                      <Button type="primary" htmlType="submit">Submit</Button>
+                    </Form.Item>
+                  </Form>
               <div>
 
 
@@ -307,7 +324,8 @@ class App extends Component {
               </div>
             </Card>
             <SubredditSuggestionsWrapper>
-                {subreddits.map(this.renderList)}
+                <SubredditSuggestHeader>New Reddit? Explore some of the popular subreddits</SubredditSuggestHeader>
+                {subreddits.map((list)=>this.renderList(list))}
             </SubredditSuggestionsWrapper>      
           </SectionWrapper>
 
@@ -322,17 +340,7 @@ class App extends Component {
 
 
 
-          <Form onSubmit={this.handleSubmit}>
-            {formItems}
-            <Form.Item {...formItemLayoutWithOutLabel}>
-              <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
-                <Icon type="plus" /> Add field
-              </Button>
-            </Form.Item>
-            <Form.Item {...formItemLayoutWithOutLabel}>
-              <Button type="primary" htmlType="submit">Submit</Button>
-            </Form.Item>
-          </Form>
+
         </div>
           : 
         <div className="App">
