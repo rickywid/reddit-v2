@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import fetchReddit from './services/fetchReddit';
 import SubReddit from './components/subReddit';
 import SettingsTab from './components/settingsTab';
-import { Button } from './assets/styled-components/button';
+// import { Button } from './assets/styled-components/button';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import styled, { css } from 'styled-components';
 import { subreddits } from './data/data';
+
+
+import {
+  Form, Input, Icon, Button,
+} from 'antd';
+
+let id = 0;
 
 library.add(faTimes);
 
@@ -55,7 +62,7 @@ class App extends Component {
     super();
 
     this.handleChange = this.handleChange.bind(this);
-    this.addSubReddit = this.addSubReddit.bind(this);
+    // this.addSubReddit = this.addSubReddit.bind(this);
     this.updateSubReddit = this.updateSubReddit.bind(this);
 
     this.state = {
@@ -75,6 +82,55 @@ class App extends Component {
 
     };
   }
+
+  remove = (k) => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys');
+    // We need at least one passenger
+    if (keys.length === 1) {
+      return;
+    }
+
+    // can use data-binding to set
+    form.setFieldsValue({
+      keys: keys.filter(key => key !== k),
+    });
+  }
+
+  add = () => {
+    const { form } = this.props;
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys');
+    const nextKeys = keys.concat(id++);
+    // can use data-binding to set
+    // important! notify form to detect changes
+    form.setFieldsValue({
+      keys: nextKeys,
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const { keys, names } = values;
+        localStorage.setItem("subreddits", JSON.stringify(names));
+        console.log(names)
+        this.setState({ 
+          subreddits: names,
+          showInitialSetup: false
+        }, ()=> { 
+          this.getData(this.state.subreddits)
+          }
+        );
+      }
+    });
+  }
+
+
+
+
 
   async getData() {
 
@@ -101,7 +157,7 @@ class App extends Component {
     
     } 
 
-    // if there is local storage has data then update local storage and fetch data
+    // if local storage has data then update local storage and fetch data
     localStorage.setItem("subreddits", JSON.stringify(subreddits));
 
     this.setState({ 
@@ -126,17 +182,17 @@ class App extends Component {
     })
   }
 
-  addSubReddit() {
+  // addSubReddit() {
 
-    this.setState( prevState => {
+  //   this.setState( prevState => {
 
-      const state = { ...prevState };
+  //     const state = { ...prevState };
 
-      state['subreddits'] = state['subreddits'].concat(['']);      
+  //     state['subreddits'] = state['subreddits'].concat(['']);      
 
-      return state;
-    })
-  }
+  //     return state;
+  //   })
+  // }
 
   displaySubs() {
     return JSON.parse(localStorage.getItem("subreddits")).map((subreddit, key)=>{
@@ -161,6 +217,53 @@ class App extends Component {
   }
 
   render() {
+
+    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 4 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 20 },
+      },
+    };
+    const formItemLayoutWithOutLabel = {
+      wrapperCol: {
+        xs: { span: 24, offset: 0 },
+        sm: { span: 20, offset: 4 },
+      },
+    };
+    getFieldDecorator('keys', { initialValue: [] });
+    const keys = getFieldValue('keys');
+    const formItems = keys.map((k, index) => (
+      <Form.Item
+        {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+        label={index === 0 ? 'Passengers' : ''}
+        required={false}
+        key={k}
+      >
+        {getFieldDecorator(`names[${k}]`, {
+          validateTrigger: ['onChange', 'onBlur'],
+          rules: [{
+            required: true,
+            whitespace: true,
+            message: "Please input passenger's name or delete this field.",
+          }],
+        })(
+          <Input placeholder="passenger name" style={{ width: '60%', marginRight: 8 }} />
+        )}
+        {keys.length > 1 ? (
+          <Icon
+            className="dynamic-delete-button"
+            type="minus-circle-o"
+            disabled={keys.length === 1}
+            onClick={() => this.remove(k)}
+          />
+        ) : null}
+      </Form.Item>
+    ));
 
     return (
       <div>
@@ -192,18 +295,44 @@ class App extends Component {
                 )
               })}
               <div>
-                <Button primary onClick={this.addSubReddit}>
-                        <FontAwesomeIcon icon="plus"/> Add subreddit
-                </Button>
-                <Button onClick={()=>this.updateSubReddit(this.state.subreddits, 'add')}>
-                  <FontAwesomeIcon className="icon icon--save" icon="check" /> Done
-                </Button>
+
+
+
+
+
+              
+
+
+
               </div>
             </Card>
             <SubredditSuggestionsWrapper>
                 {subreddits.map(this.renderList)}
             </SubredditSuggestionsWrapper>      
           </SectionWrapper>
+
+
+
+
+
+
+
+
+
+
+
+
+          <Form onSubmit={this.handleSubmit}>
+            {formItems}
+            <Form.Item {...formItemLayoutWithOutLabel}>
+              <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
+                <Icon type="plus" /> Add field
+              </Button>
+            </Form.Item>
+            <Form.Item {...formItemLayoutWithOutLabel}>
+              <Button type="primary" htmlType="submit">Submit</Button>
+            </Form.Item>
+          </Form>
         </div>
           : 
         <div className="App">
@@ -222,4 +351,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const AppWrapper = Form.create({ name: 'app' })(App);
+
+export default AppWrapper;
