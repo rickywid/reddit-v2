@@ -23,13 +23,10 @@ const HeaderWrapper = styled.div`
 `
 const Card = styled.div`
   flex: 1;
+  text-align: center;
 `
 const SubredditSuggestionsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  flex-wrap: wrap;
-  align-self: flex-start;
+
 `
 const SubredditSuggestions = styled.div`
   flex-grow: 1;
@@ -37,7 +34,7 @@ const SubredditSuggestions = styled.div`
   padding: 0.5rem 0;
 `
 const SubredditCategory = styled.p`
-  color: red;
+  color: #fdcb01;
   font-weight: bold;
 `
 const SubredditList = styled.ul`
@@ -46,26 +43,30 @@ const SubredditList = styled.ul`
   padding: 0;  
 `
 const SubredditItem = styled.li`
-  list-item: none;
   :hover {
     color: #111;
     cursor: pointer;
   }
 `
-const SubredditSuggestHeader = styled.div`
+const SubredditSuggestHeader = styled.p`
   display: block;
   width: 100%;
   text-align: center;
   font-weight: bold;
   margin-bottom: 2rem;
 `
+const SubredditListWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  flex-wrap: wrap;
+  align-self: flex-start;
+`
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 1200px;
   margin: 0 auto;
-  margin-top: 6rem;
-  background: #f9f9f9;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
   padding: 2rem;
 `
@@ -236,29 +237,29 @@ class App extends Component {
   render() {
 
     const { getFieldDecorator, getFieldValue } = this.props.form;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
-      },
-    };
-    const formItemLayoutWithOutLabel = {
-      wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 20, offset: 4 },
-      },
-    };
+    // const formItemLayout = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 4 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 20 },
+    //   },
+    // };
+    // const formItemLayoutWithOutLabel = {
+    //   wrapperCol: {
+    //     xs: { span: 24, offset: 0 },
+    //     sm: { span: 20, offset: 4 },
+    //   },
+    // };
 
     getFieldDecorator('keys', { initialValue: []});
     const keys = getFieldValue('keys');
     const formItems = keys.map((k, index) => (
       <Form.Item
-        {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-        label={index === 0 ? 'r/' : ''}
+        
+        
         required={false}
         key={k}
       >
@@ -299,16 +300,16 @@ class App extends Component {
           </HeaderWrapper>
           <SectionWrapper>
             <Card>
-              <h2>Start adding some of your favourite subreddits</h2>
+              <p>Start adding some of your favourite subreddits</p>
                   <Form onSubmit={this.handleSubmit}>
                     {formItems}
-                    <Form.Item {...formItemLayoutWithOutLabel}>
+                    <Form.Item style={{display: 'inline-block', marginRight: '1rem'}}>
                       <Button type="dashed" onClick={this.add}>
-                        <Icon type="plus" /> Add field
+                        <Icon type="plus" /> Add Subreddit
                       </Button>
                     </Form.Item>
-                    <Form.Item {...formItemLayoutWithOutLabel}>
-                      <Button type="primary" htmlType="submit">Submit</Button>
+                    <Form.Item style={{display: 'inline-block'}}>
+                      <Button htmlType="submit">Submit</Button>
                     </Form.Item>
                   </Form>
               <div>
@@ -324,8 +325,10 @@ class App extends Component {
               </div>
             </Card>
             <SubredditSuggestionsWrapper>
-                <SubredditSuggestHeader>New Reddit? Explore some of the popular subreddits</SubredditSuggestHeader>
-                {subreddits.map((list)=>this.renderList(list))}
+                <SubredditSuggestHeader>New to <a href="https://reddit.com">Reddit</a>? Explore some of the popular subreddits</SubredditSuggestHeader>
+                <SubredditListWrapper>
+                  {subreddits.map((list)=>this.renderList(list))}
+                </SubredditListWrapper>
             </SubredditSuggestionsWrapper>      
           </SectionWrapper>
 

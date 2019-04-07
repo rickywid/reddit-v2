@@ -1,3 +1,7 @@
+body {
+	/*background: url(https://res.cloudinary.com/dzeqj2xv1/image/upload/v1554657561/background-1789175_1280.png);*/
+}
+
 .dynamic-delete-button {
   cursor: pointer;
   position: relative;
@@ -12,4 +16,9 @@
 .dynamic-delete-button[disabled] {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.ant-form-explained {
+	width: 65%;
+	margin: 0 auto;
 }
