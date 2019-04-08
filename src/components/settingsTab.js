@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlus, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { Button, Drawer, Form, Icon, message } from 'antd';
 
 library.add(faCog, faPlus, faCheck, faTimes);
 
@@ -13,13 +14,25 @@ class SettingsTab extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.addInput = this.addInput.bind(this);
     this.saveSubs = this.saveSubs.bind(this);
-    this.openSettings = this.openSettings.bind(this);
 
     this.state = {
       updatedSubs: [],
-      isOpen: false
+      visible: false
     }
   }
+
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    console.log('close')
+    this.setState({
+      visible: false,
+    });
+  };
 
   componentDidMount() {
 
@@ -29,11 +42,6 @@ class SettingsTab extends Component {
   static getDerivedStateFromProps(nextProps, prevProps) {
 
     return { updatedSubs: nextProps.subreddits }
-  }
-
-  openSettings() {
-
-    this.setState({ isOpen: !this.state.isOpen });
   }
 
   handleChange(e) {
@@ -74,38 +82,59 @@ class SettingsTab extends Component {
       this.props.updateSubs(this.state.updatedSubs, 'delete')
 
       return state;
+    }, ()=>{
+      message.success('Removed');
     });
   }
 
   displayInput(subreddit, key) {
     return (
       <div className="new-sub__wrap" key={key}>
-        <label className="new-sub__label" >r/
-          <input className="new-sub__input" name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
-        </label>
-        <FontAwesomeIcon onClick={this.deleteInput.bind(this, key)} className="icon icon--remove" icon="times" />
+          <input className="new-sub__input animated fadeIn" name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
+          <Icon
+            className="dynamic-delete-button"
+            type="minus-circle-o"
+            onClick={this.deleteInput.bind(this, key)}
+          />
       </div>
     )
   }
 
   saveSubs() {
-    this.setState({ isOpen: false });
-    this.props.updateSubs(this.state.updatedSubs, 'add');
+    this.setState({ visible: false }, () => {
+      message.success('Updated');
+      this.props.updateSubs(this.state.updatedSubs, 'add');
+    });
   }
 
   render() {
-    if(this.state.isOpen) {
-      return (
-        <div className="new-sub">
+
+
+    return (
+      <div>
+        <Button type="primary" onClick={this.showDrawer}>
+          Open
+        </Button>
+        <Drawer
+          title="Manage Subreddits"
+          placement="right"
+          closable={true}
+          onClose={this.onClose}
+          visible={this.state.visible}
+          width={'auto'}
+        >
           {this.state.updatedSubs.map(this.displayInput.bind(this))}
-          <button className="btn btn--add" onClick={this.addInput}><FontAwesomeIcon className="icon icon--add" icon="plus" /> Add Subreddit</button>
-          <button className="btn btn--save" onClick={this.saveSubs}><FontAwesomeIcon className="icon icon--save" icon="check" /> Done</button>
-          <button className="btn btn--close" onClick={this.openSettings}>close</button>
-        </div>
-      );      
-    } else {
-      return <button className="settings-btn" onClick={this.openSettings}><FontAwesomeIcon className="icon icon--cog" icon="cog" />Settings</button>
-    }
+            <Form.Item style={{display: 'inline-block', marginRight: '1rem'}}>
+              <Button type="dashed" onClick={this.addInput}>
+                <Icon type="plus" /> Add Subreddit
+              </Button>
+            </Form.Item>
+            <Form.Item style={{display: 'inline-block'}}>
+              <Button type="primary" onClick={this.saveSubs}>Submit</Button>
+            </Form.Item>          
+        </Drawer>
+      </div>        
+    );      
   }
 }
 

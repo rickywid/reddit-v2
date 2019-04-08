@@ -14,7 +14,7 @@ import {
   Form, Input, Icon, Button, notification
 } from 'antd';
 
-let id = 0;
+let id = 1;
 
 library.add(faTimes);
 
@@ -124,6 +124,7 @@ class App extends Component {
     const { form } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue('keys');
+    console.log(keys)
     const nextKeys = keys.concat(id++);
     // can use data-binding to set
     // important! notify form to detect changes
@@ -168,7 +169,9 @@ class App extends Component {
     if(type === 'delete' && subreddits.length === 0) {
         
       localStorage.removeItem("subreddits");
-      
+      this.props.form.setFieldsValue({
+        keys: [0],
+      });
       this.setState({ 
         showInitialSetup: true, 
         subreddits: [] 
@@ -233,8 +236,9 @@ class App extends Component {
 
     const { getFieldDecorator, getFieldValue } = this.props.form;
 
-    getFieldDecorator('keys', { initialValue: []});
+    getFieldDecorator('keys', {initialValue: [0]});
     const keys = getFieldValue('keys');
+    console.log(keys)
     const formItems = keys.map((k, index) => (
       <Form.Item
         
@@ -329,6 +333,7 @@ class App extends Component {
           <nav>
             <SettingsTab  subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
                           updateSubs={this.updateSubReddit}
+                          form={this.props.form}
             />
           </nav>
           <div>
