@@ -1,5 +1,7 @@
 body {
-	/*background: url(https://res.cloudinary.com/dzeqj2xv1/image/upload/v1554657561/background-1789175_1280.png);*/
+	background: url(https://res.cloudinary.com/dzeqj2xv1/image/upload/v1554657561/background-1789175_1280.png);
+	padding-bottom: 8rem;
+	/*overflow: hidden;*/
 }
 
 .dynamic-delete-button {

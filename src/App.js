@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import styled, { css } from 'styled-components';
 import { subreddits } from './data/data';
-
+import { ReactComponent as Logo } from './assets/icons/start-up.svg';
 
 import {
   Form, Input, Icon, Button, notification
@@ -22,11 +22,25 @@ const HeaderWrapper = styled.div`
   text-align: center;
 `
 const Card = styled.div`
-  flex: 1;
   text-align: center;
+  position: relative;
+  background: #f60261;
+  border-radius: 5px;
+  box-shadow: 0 1px 7px 1px rgba(0,0,0,.4);
+  flex-basis: 45%;
+`
+const CardHeader = styled.div`
+  background: #250448 none repeat scroll 0% 0%;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px 0px rgba(0,0,0,.5);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 `
 const SubredditSuggestionsWrapper = styled.div`
-
+  display: flex;
+  flex-direction: column;
+  flex-basis: 45%;
 `
 const SubredditSuggestions = styled.div`
   flex-grow: 1;
@@ -34,7 +48,7 @@ const SubredditSuggestions = styled.div`
   padding: 0.5rem 0;
 `
 const SubredditCategory = styled.p`
-  color: #fdcb01;
+  color: #f60261;
   font-weight: bold;
 `
 const SubredditList = styled.ul`
@@ -58,7 +72,6 @@ const SubredditSuggestHeader = styled.p`
 const SubredditListWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  flex: 1;
   flex-wrap: wrap;
   align-self: flex-start;
 `
@@ -68,7 +81,15 @@ const SectionWrapper = styled.div`
   width: 1200px;
   margin: 0 auto;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
-  padding: 2rem;
+  padding: 4rem;
+  background: white;
+  border-radius: 5px;
+  justify-content: space-between;
+`
+const SubsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `
 
 const openNotificationWithIcon = (type, label, sub, description) => {
@@ -254,7 +275,7 @@ class App extends Component {
             message: "Required",
           }],
         })(
-          <Input placeholder="e.g: showerthoughts" style={{ width: '60%', marginRight: 8 }} />
+          <Input placeholder="e.g: showerthoughts" style={{ width: '75%', marginRight: 8 }} />
         )}
         {keys.length > 1 ? (
           <Icon
@@ -262,6 +283,7 @@ class App extends Component {
             type="minus-circle-o"
             disabled={keys.length === 1}
             onClick={() => this.remove(k)}
+            style={{fill: '#fdcb01'}}
           />
         ) : null}
       </Form.Item>
@@ -278,12 +300,17 @@ class App extends Component {
           ? 
         <div className="animated fadeIn">
           <HeaderWrapper>
-            <h1>Header Goes Over Here</h1>
-            <h2>Subheader goes over here where you describe what your sites does</h2>
+            <div>
+              <h1>Header Goes Over Here</h1>
+              <h2>Subheader goes over here where you describe what your sites does</h2>
+            </div>
           </HeaderWrapper>
           <SectionWrapper>
             <Card>
-              <p>Start adding some of your favourite subreddits</p>
+              <CardHeader>
+                <p style={{fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0}}>Lets Get Started.</p>
+                <p style={{color: 'white', margin: 0, padding: 0}}>Start adding some of your favourite subreddits now.</p>
+              </CardHeader>
                   <Form onSubmit={this.handleSubmit}>
                     {formItems}
                     <Form.Item style={{display: 'inline-block', marginRight: '1rem'}}>
@@ -295,17 +322,6 @@ class App extends Component {
                       <Button htmlType="submit">Submit</Button>
                     </Form.Item>
                   </Form>
-              <div>
-
-
-
-
-
-              
-
-
-
-              </div>
             </Card>
             <SubredditSuggestionsWrapper>
                 <SubredditSuggestHeader>New to <a href="https://reddit.com">Reddit</a>? Explore some of the popular subreddits</SubredditSuggestHeader>
@@ -336,9 +352,9 @@ class App extends Component {
                           form={this.props.form}
             />
           </nav>
-          <div>
+          <SubsWrapper>
             {this.displaySubs()}
-          </div>
+          </SubsWrapper>
         </div>
         }
       </div>

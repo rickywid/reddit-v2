@@ -3,8 +3,24 @@ import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faStar, faVideo } from '@fortawesome/free-solid-svg-icons'
+import styled, { css } from 'styled-components';
 
 library.add(faImage, faStar, faVideo);
+
+const Wrapper = styled.div`
+  background: white;
+  margin-bottom: 2rem;
+  padding: 3rem;
+  flex-basis: 32%;
+  align-self: flex-start;
+`
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+`
+const ListItem = styled.li`
+  list-style: none;
+`
 
 class SubReddit extends Component {
   constructor(props) {
@@ -27,7 +43,7 @@ class SubReddit extends Component {
     const isVideo = data.data.is_video === true ? <FontAwesomeIcon className="icon-link icon--video" icon="video" /> : '';
 
     return (
-      <li key={key} className="subreddit-topic">
+      <ListItem>
         <a className={`subreddit-topic__link ${isStickied}`} href={data.data.url} target="_blank" rel="noopener noreferrer">{data.data.title}</a>
         <small> by <a href={`https://reddit.com/u/${data.data.author}`}>{data.data.author}</a> </small>
         <small>{moment(data.data.created_utc * 1000).fromNow()}</small>
@@ -35,7 +51,7 @@ class SubReddit extends Component {
         {isGilded}
         {isImage}
         {isVideo}
-      </li>
+      </ListItem>
     )
   }
 
@@ -48,12 +64,14 @@ class SubReddit extends Component {
     }
 
     return (
-      <div className="subreddit">
+      <Wrapper>
         <a className="subreddit-title" href={`https://reddit.com/${data[0].data.permalink}`}>
           <h2>r/{data[0].data.subreddit}</h2>
         </a>
-        <ul className="subreddit-topics">{data.map(this.displayLinks)}</ul>
-      </div>
+        <List>
+          {data.map(this.displayLinks)}
+        </List>
+      </Wrapper>
     );
   }
 }
