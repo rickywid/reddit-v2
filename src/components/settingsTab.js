@@ -111,7 +111,7 @@ class SettingsTab extends Component {
 
     return (
       <div style={{lineHeight: 0}}>
-        <Button style={{position: 'fixed', top: 47, right: '4rem'}} type="primary" onClick={this.showDrawer}>
+        <Button className="manage-btn" type="primary" onClick={this.showDrawer}>
           Manage
         </Button>
         <Drawer

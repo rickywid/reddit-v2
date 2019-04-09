@@ -107,3 +107,18 @@ body {
 	top: 15px;
 	transform: rotate(-135deg);
 }
+
+.manage-btn {
+	z-index: 1;
+	position: fixed !important;
+	top: 35px !important;
+	right: 20px !important;
+}
+
+@media only screen and (min-width: 500px) {
+	.manage-btn {
+		top: 47px !important;
+		right: 4rem !important;
+	}
+}
+
