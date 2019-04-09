@@ -8,54 +8,54 @@ export const subreddits = [
 				description: 'All stuff funny including videos, pictures and stories shared on the web'
 			},
 			{ 
-				label: 'TodayILearned', 
+				label: 'Today I Learned', 
 				sub: 'til',
 				description: 'Read stories of what people have learned today'
 			},
 			{ 
-				label: 'AskMeAnything', 
+				label: 'Ask Me Anything', 
 				sub: 'iama',
 				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
 			},
 			{ 
-				label: 'ShowerThoughts', 
+				label: 'Shower Thoughts', 
 				sub: 'showerthoughts',
 				description: 'A place for members of the Reddit community to ask each other questions about anything'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
+				label: 'Explain Like I\'m Five', 
+				sub: 'explainlikeimfive',
 				description: 'Questions answered in a simplified way that even a 5 year old can understand'
 			}
 		]
 	},
 	{
-		category_name: 'Health',
+		category_name: 'Food',
 		subreddit: [
 			{ 
-				label: 'Fitness', 
-				sub: 'fitness',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'Cooking', 
+				sub: 'cooking',
+				description: 'Find recipes and cooking tips'
 			},
 			{ 
-				label: 'HealythyFood', 
-				sub: 'healthyfood',
-				description: 'Read stories of what people have learned today'
+				label: 'Ask Culinary', 
+				sub: 'askculinary',
+				description: 'Q&A community about anything cooking related'
 			},
 			{ 
-				label: 'EatCheapAndHealthy', 
+				label: 'Recipes', 
+				sub: 'recipes',
+				description: 'Find and share recipe ideas'
+			},
+			{ 
+				label: 'Eat Cheap and Healthy', 
 				sub: 'eatcheapandhealthy',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				description: 'Learn to make meals that inexpensive and healthy'
 			},
 			{ 
-				label: 'LoseIt', 
-				sub: 'loseit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
-			},
-			{ 
-				label: 'BodyBuilding', 
-				sub: 'bodybuilding',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'GIF Recipes', 
+				sub: 'gifrecipes',
+				description: 'Users share animated GIF\'s displaying how to create a dish'
 			}
 		]
 	},
@@ -63,29 +63,29 @@ export const subreddits = [
 		category_name: 'Science',
 		subreddit: [
 			{ 
-				label: 'Funny', 
-				sub: 'funny',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'Ask Science', 
+				sub: 'askscience',
+				description: 'Ask science related questions'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'Space', 
+				sub: 'space',
+				description: 'Discussion about space and the universe'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'You Should Know', 
+				sub: 'youshouldknow',
+				description: 'General information about stuff you should know'
 			},
 			{ 
-				label: 'AskReddit', 
+				label: 'Futurology', 
 				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				description: 'Discussion about the study of the future'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'Life Pro Tips', 
+				sub: 'lifeprotips',
+				description: 'Users share bite-size “pro tips” for life'
 			}
 		]
 	},
@@ -93,29 +93,29 @@ export const subreddits = [
 		category_name: 'Technology',
 		subreddit: [
 			{ 
-				label: 'Funny', 
-				sub: 'funny',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'Apple', 
+				sub: 'apple',
+				description: 'Apple news and discussion'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'Android', 
+				sub: 'android',
+				description: 'Android news and discussion'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'Tech', 
+				sub: 'tech',
+				description: 'Latest and greatest news in tech'
 			},
 			{ 
-				label: 'AskReddit', 
-				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				label: 'Gadgets', 
+				sub: 'gadgets',
+				description: 'News and stories about the latest gadgets'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'Bitcoin', 
+				sub: 'bitcoin',
+				description: 'Bitcoin news and discussion'
 			}
 		]
 	},
@@ -128,24 +128,24 @@ export const subreddits = [
 				description: 'All stuff funny including videos, pictures and stories shared on the web'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'Entertainment', 
+				sub: 'entertainment',
+				description: 'Celebrity, music and Hollywood talk'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'Uplifting News', 
+				sub: 'upliftingnews',
+				description: 'Inspirational and feel-good news'
 			},
 			{ 
-				label: 'AskReddit', 
-				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				label: 'World News', 
+				sub: 'worldnews',
+				description: 'Biggest news stories from around the world'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'News', 
+				sub: 'news',
+				description: 'Biggest news stories in the US'
 			}
 		]
 	},
@@ -153,59 +153,59 @@ export const subreddits = [
 		category_name: 'TV/Film',
 		subreddit: [
 			{ 
-				label: 'Funny', 
-				sub: 'funny',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'Television', 
+				sub: 'television',
+				description: 'TV news and discussion'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'Movies', 
+				sub: 'movies',
+				description: 'Movie news and discussion'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'Game of Thrones', 
+				sub: 'gameofthrones',
+				description: 'Game of Thrones discussion'
 			},
 			{ 
-				label: 'AskReddit', 
-				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				label: 'Rick and Morty', 
+				sub: 'rickandmorty',
+				description: 'Rick and Morty discussion'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'Documentaries', 
+				sub: 'documentaries',
+				description: 'Users share documentaries from around the web'
 			}
 		]
 	},
 	{
-		category_name: 'Gaming',
+		category_name: 'Video Games',
 		subreddit: [
 			{ 
-				label: 'Funny', 
-				sub: 'funny',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'Gaming', 
+				sub: 'gaming',
+				description: 'General discussion relating to video games'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'League Of Legends', 
+				sub: 'leagueoflegends',
+				description: 'Discussion about popular video game League Of Legends'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'Nintendo', 
+				sub: 'nintendo',
+				description: 'Nintendo gaming, news and discussion'
 			},
 			{ 
-				label: 'AskReddit', 
-				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				label: 'Playstation 4', 
+				sub: 'ps4',
+				description: 'Playstation 4 gaming, news and discussion'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'Xbox One', 
+				sub: 'xboxone',
+				description: 'Discussion of all things Xbox One'
 			}
 		]
 	},
@@ -213,60 +213,60 @@ export const subreddits = [
 		category_name: 'Travel',
 		subreddit: [
 			{ 
-				label: 'Funny', 
-				sub: 'funny',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'Travel', 
+				sub: 'travel',
+				description: 'Travel news, advice and photos'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'Solo Travel', 
+				sub: 'solotravel',
+				description: 'Travel advice and recommendations for the solo traveller'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'ShoeString', 
+				sub: 'shoestring',
+				description: 'Cost saving advice for the budget traveller'
 			},
 			{ 
-				label: 'AskReddit', 
-				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				label: 'I Want Out', 
+				sub: 'iwantout',
+				description: 'Discussion for individuals who are thinking of leaving home to live in a foreign country'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
+				label: 'Digital Nomad', 
+				sub: 'digitalnomad',
+				description: 'Discussion about working while travelling abroad'
 			}
 		]
 	},
 	{
-		category_name: 'Food',
+		category_name: 'Sports',
 		subreddit: [
 			{ 
-				label: 'Funny', 
-				sub: 'funny',
-				description: 'All stuff funny including videos, pictures and stories shared on the web'
+				label: 'NBA', 
+				sub: 'nba',
+				description: 'NBA related discussion'
 			},
 			{ 
-				label: 'TodayILearned', 
-				sub: 'til',
-				description: 'Read stories of what people have learned today'
+				label: 'NFL', 
+				sub: 'nfl',
+				description: 'NFL related discussion'
 			},
 			{ 
-				label: 'AskMeAnything', 
-				sub: 'iama',
-				description: 'Industry experts invite users to ask questions relating to their skills and expertise'
+				label: 'MLB', 
+				sub: 'mlb',
+				description: 'MLB related discussion'
 			},
 			{ 
-				label: 'AskReddit', 
-				sub: 'askreddit',
-				description: 'A place for members of the Reddit community to ask each other questions about anything'
+				label: 'NHL', 
+				sub: 'nhl',
+				description: 'NHL related discussion'
 			},
 			{ 
-				label: 'ExplainLikeIm5', 
-				sub: 'eli5',
-				description: 'Questions answered in a simplified way that even a 5 year old can understand'
-			}
+				label: 'Soccer', 
+				sub: 'soccer',
+				description: 'Soccer related discussion'
+			},
 		]
 	}
 ]

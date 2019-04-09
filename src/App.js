@@ -20,6 +20,7 @@ library.add(faTimes);
 
 const BodyWrapper = styled.div`
   padding: 1rem;
+  overflow: hidden;
   
   @media (min-width: 500px) {
     padding: 2rem 4rem;  
@@ -361,7 +362,7 @@ class App extends Component {
                   {subreddits.map((list)=>this.renderList(list))}
                 </SubredditListWrapper>
             </SubredditSuggestionsWrapper>
-            <RocketSVG style={{position: 'absolute', right: -50, bottom: -50, height: 200, width: 'auto'}}/>    
+            <RocketSVG style={{position: 'absolute', right: -100, bottom: -50, height: 200, width: 'auto'}}/>    
           </SectionWrapper>
         </div>
           : 
