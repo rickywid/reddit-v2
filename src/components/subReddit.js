@@ -3,17 +3,21 @@ import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faStar, faVideo } from '@fortawesome/free-solid-svg-icons'
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 library.add(faImage, faStar, faVideo);
 
 const Wrapper = styled.div`
   background: #250448;
   margin-bottom: 2rem;
-  padding: 3rem;
+  padding: 1rem;
 
   h2 {
     color: #f60261
+  }
+
+  @media (min-width: 600px) {
+    padding: 3rem;  
   }
 
 `

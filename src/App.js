@@ -4,12 +4,11 @@ import SubReddit from './components/subReddit';
 import SettingsTab from './components/settingsTab';
 // import { Button } from './assets/styled-components/button';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { subreddits } from './data/data';
 import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
-import { ReactComponent as StarsSVG } from './assets/icons/falling-star.svg';
+// import { ReactComponent as StarsSVG } from './assets/icons/falling-star.svg';
 
 import {
   Form, Input, Icon, Button, notification
@@ -19,28 +18,49 @@ let id = 1;
 
 library.add(faTimes);
 
+const BodyWrapper = styled.div`
+  padding: 1rem;
+  
+  @media (min-width: 500px) {
+    padding: 2rem 4rem;  
+  }
+`
+
 const NavBar = styled.nav`
   color: white;
   font-size: 48px;
   display: flex;
   align-items: center;
-  justify-content: space-between;  
+  justify-content: space-between; 
 ` 
 const Card = styled.div`
-  text-align: center;
+  
   position: relative;
   background: #f60261;
   border-radius: 5px;
   box-shadow: 0 1px 7px 1px rgba(0,0,0,.4);
+  margin-bottom: 3rem;
   flex-basis: 45%;
 `
 const CardHeader = styled.div`
   background: #250448 none repeat scroll 0% 0%;
-  padding: 1.5rem 0;
+  padding: 1.5rem 2rem;
   margin-bottom: 2rem;
   box-shadow: 0 4px 6px 0px rgba(0,0,0,.5);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+
+  svg {
+    height: 50px; 
+    position: absolute;
+    right: -49px;
+    transform: rotate(-111deg); 
+    top: 11px;
+
+    @media (min-width: 500px) {
+      right: 36px;
+    }    
+  }
 `
 const SubredditSuggestionsWrapper = styled.div`
   display: flex;
@@ -55,6 +75,7 @@ const SubredditSuggestions = styled.div`
 const SubredditCategory = styled.p`
   color: #f60261;
   font-weight: bold;
+  margin: 0;
 `
 const SubredditList = styled.ul`
   list-style: none;
@@ -82,15 +103,21 @@ const SubredditListWrapper = styled.div`
 `
 const SectionWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 1200px;
+  flex-direction: column;
+  width: auto;
   margin: 0 auto;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
-  padding: 4rem;
+  padding: 1rem;
   background: white;
   border-radius: 5px;
   justify-content: space-between;
-  border: 27px solid #250448;
+  
+  @media (min-width: 900px) {
+    flex-direction: row;
+    padding: 4rem;
+    border: 27px solid #250448;
+      width: 1200px;
+  }  
 `
 const SubsWrapper = styled.div`
 
@@ -162,7 +189,7 @@ class App extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const { keys, names } = values;
+        const { names } = values;
         localStorage.setItem("subreddits", JSON.stringify(names));
         this.setState({ 
           subreddits: names,
@@ -292,7 +319,7 @@ class App extends Component {
     ));
 
     return (
-      <div style={{ padding: '2rem 4rem'}}>
+      <BodyWrapper>
 
         <NavBar>
           <p style={{margin: 0}}>reddit</p>
@@ -313,9 +340,8 @@ class App extends Component {
           <SectionWrapper style={{position: 'relative'}}>
             <Card>
               <CardHeader>
-                <StarsSVG style={{height: 50, position: 'absolute', right: 36, transform: 'rotate(-111deg)', top: 11}}/>
-                <p style={{fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0}}>Lets Get Started</p>
-                <p style={{color: '#e5e5e5', margin: 0, padding: 0, fontSize: 12}}>Start adding some of your favourite subreddits</p>
+                <p className= "x" style={{fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0}}>Lets Get Started</p>
+                <p style={{color: '#ccc', margin: 0, padding: 0, fontSize: 12}}>Start adding some of your favourite subreddits</p>
               </CardHeader>
                   <Form onSubmit={this.handleSubmit}>
                     {formItems}
@@ -345,7 +371,7 @@ class App extends Component {
           </SubsWrapper>
         </div>
         }
-      </div>
+      </BodyWrapper>
     )
   }
 }

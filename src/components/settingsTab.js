@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog, faPlus, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Button, Drawer, Form, Icon, message } from 'antd';
 
