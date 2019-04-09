@@ -90,7 +90,7 @@ class SettingsTab extends Component {
   displayInput(subreddit, key) {
     return (
       <div className="new-sub__wrap" key={key}>
-          <input className="new-sub__input animated fadeIn" name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
+          <input className="new-sub__input animated fadeIn" style={{padding: '8px', marginBottom: '1rem', marginRight: '10px'}} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
           <Icon
             className="dynamic-delete-button"
             type="minus-circle-o"
@@ -111,9 +111,9 @@ class SettingsTab extends Component {
 
 
     return (
-      <div>
-        <Button type="primary" onClick={this.showDrawer}>
-          Open
+      <div style={{lineHeight: 0}}>
+        <Button style={{position: 'fixed', top: 47, right: '4rem'}} type="primary" onClick={this.showDrawer}>
+          Manage
         </Button>
         <Drawer
           title="Manage Subreddits"
@@ -122,6 +122,7 @@ class SettingsTab extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
           width={'auto'}
+          className="drawer"
         >
           {this.state.updatedSubs.map(this.displayInput.bind(this))}
             <Form.Item style={{display: 'inline-block', marginRight: '1rem'}}>

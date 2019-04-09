@@ -8,11 +8,14 @@ import styled, { css } from 'styled-components';
 library.add(faImage, faStar, faVideo);
 
 const Wrapper = styled.div`
-  background: white;
+  background: #250448;
   margin-bottom: 2rem;
   padding: 3rem;
-  flex-basis: 32%;
-  align-self: flex-start;
+
+  h2 {
+    color: #f60261
+  }
+
 `
 const List = styled.ul`
   margin: 0;
@@ -20,6 +23,18 @@ const List = styled.ul`
 `
 const ListItem = styled.li`
   list-style: none;
+
+  a {
+    color: white;
+  }
+  small {
+    color: #fdcb01; 
+    font-weight: bold
+
+    a {
+      color: #00ebea;
+    }
+  }
 `
 
 class SubReddit extends Component {
@@ -47,7 +62,7 @@ class SubReddit extends Component {
         <a className={`subreddit-topic__link ${isStickied}`} href={data.data.url} target="_blank" rel="noopener noreferrer">{data.data.title}</a>
         <small> by <a href={`https://reddit.com/u/${data.data.author}`}>{data.data.author}</a> </small>
         <small>{moment(data.data.created_utc * 1000).fromNow()}</small>
-        <small> <a href={`https://reddit.com${data.data.permalink}`}>{data.data.num_comments} comments</a></small>
+        <small style={{marginRight: '1rem'}}> <a href={`https://reddit.com${data.data.permalink}`}>{data.data.num_comments} comments</a></small>
         {isGilded}
         {isImage}
         {isVideo}
@@ -60,13 +75,13 @@ class SubReddit extends Component {
     const { data } = this.props;
 
     if(!this.props.data) {
-      return <div>loading</div>
+      return <div></div>
     }
 
     return (
-      <Wrapper>
+      <Wrapper className="animated fadeIn">
         <a className="subreddit-title" href={`https://reddit.com/${data[0].data.permalink}`}>
-          <h2>r/{data[0].data.subreddit}</h2>
+          <h2>{data[0].data.subreddit}</h2>
         </a>
         <List>
           {data.map(this.displayLinks)}

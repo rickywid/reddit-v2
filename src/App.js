@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import styled, { css } from 'styled-components';
 import { subreddits } from './data/data';
-import { ReactComponent as Logo } from './assets/icons/start-up.svg';
+import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
+import { ReactComponent as StarsSVG } from './assets/icons/falling-star.svg';
 
 import {
   Form, Input, Icon, Button, notification
@@ -18,9 +19,13 @@ let id = 1;
 
 library.add(faTimes);
 
-const HeaderWrapper = styled.div`
-  text-align: center;
-`
+const NavBar = styled.nav`
+  color: white;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  
+` 
 const Card = styled.div`
   text-align: center;
   position: relative;
@@ -85,11 +90,10 @@ const SectionWrapper = styled.div`
   background: white;
   border-radius: 5px;
   justify-content: space-between;
+  border: 27px solid #250448;
 `
 const SubsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+
 `
 
 const openNotificationWithIcon = (type, label, sub, description) => {
@@ -262,8 +266,6 @@ class App extends Component {
     console.log(keys)
     const formItems = keys.map((k, index) => (
       <Form.Item
-        
-        
         required={false}
         key={k}
       >
@@ -290,26 +292,30 @@ class App extends Component {
     ));
 
     return (
-      <div style={{ padding: '2rem'}}>
+      <div style={{ padding: '2rem 4rem'}}>
 
-        <nav>
-          reddit
-        </nav>
+        <NavBar>
+          <p style={{margin: 0}}>reddit</p>
+       
+          {!this.state.showInitialSetup 
+            ?           
+            <SettingsTab  
+              subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
+              updateSubs={this.updateSubReddit}
+              form={this.props.form}
+          /> : ""
+        }
+        </NavBar>
 
         {this.state.showInitialSetup 
           ? 
         <div className="animated fadeIn">
-          <HeaderWrapper>
-            <div>
-              <h1>Header Goes Over Here</h1>
-              <h2>Subheader goes over here where you describe what your sites does</h2>
-            </div>
-          </HeaderWrapper>
-          <SectionWrapper>
+          <SectionWrapper style={{position: 'relative'}}>
             <Card>
               <CardHeader>
-                <p style={{fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0}}>Lets Get Started.</p>
-                <p style={{color: 'white', margin: 0, padding: 0}}>Start adding some of your favourite subreddits now.</p>
+                <StarsSVG style={{height: 50, position: 'absolute', right: 36, transform: 'rotate(-111deg)', top: 11}}/>
+                <p style={{fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0}}>Lets Get Started</p>
+                <p style={{color: '#e5e5e5', margin: 0, padding: 0, fontSize: 12}}>Start adding some of your favourite subreddits</p>
               </CardHeader>
                   <Form onSubmit={this.handleSubmit}>
                     {formItems}
@@ -328,30 +334,12 @@ class App extends Component {
                 <SubredditListWrapper>
                   {subreddits.map((list)=>this.renderList(list))}
                 </SubredditListWrapper>
-            </SubredditSuggestionsWrapper>      
+            </SubredditSuggestionsWrapper>
+            <RocketSVG style={{position: 'absolute', right: -50, bottom: -50, height: 200, width: 'auto'}}/>    
           </SectionWrapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
           : 
         <div className="App">
-          <nav>
-            <SettingsTab  subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
-                          updateSubs={this.updateSubReddit}
-                          form={this.props.form}
-            />
-          </nav>
           <SubsWrapper>
             {this.displaySubs()}
           </SubsWrapper>

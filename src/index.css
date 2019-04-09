@@ -15,12 +15,77 @@ body {
 .dynamic-delete-button:hover {
   color: #777;
 }
+
+.dynamic-delete-button svg {
+	fill: #fdcb01;
+}
+
 .dynamic-delete-button[disabled] {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
+.ant-btn-primary {
+	background-color: #f60261 !important;
+	border-color: #f60261 !important;
+	font-weight: bold !important;
+}
+
 .ant-form-explained {
 	width: 65%;
 	margin: 0 auto;
+}
+
+.ant-form-explain {
+	color: white !important;
+	text-align: left;
+	width: 76%;
+	margin: 0 auto;
+}
+
+.stickied {
+	color: yellow !important;
+	font-weight: bold;
+}
+
+.svg-inline--fa {
+	margin-right: 10px;
+}
+
+.fa-star {
+	color: yellow;
+}
+
+.fa-video, .fa-image {
+	color: #f60261;
+}
+
+.ant-drawer-header {
+	background-color: #f60261 !important;
+	border-bottom: none !important;
+}
+
+.anticon-close {
+	color: white !important;
+}
+
+.ant-drawer-header .ant-drawer-title {
+	color: white !important;
+	font-weight: bold;
+}
+
+.ant-drawer-wrapper-body {
+	background: #250448 !important;
+}
+
+.ant-drawer-wrapper-body:after{
+	content: '';
+	background: url(./assets/icons/moon.svg) center;
+	background-repeat: repeat;
+	position: absolute;
+	height: 300px;
+	width: 100%;
+	background-repeat: no-repeat;
+	display: block;
+	bottom: -108px;
 }
