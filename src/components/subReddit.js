@@ -62,7 +62,7 @@ class SubReddit extends Component {
     const isVideo = data.data.is_video === true ? <FontAwesomeIcon className="icon-link icon--video" icon="video" /> : '';
 
     return (
-      <ListItem>
+      <ListItem key={key}>
         <a className={`subreddit-topic__link ${isStickied}`} href={data.data.url} target="_blank" rel="noopener noreferrer">{data.data.title}</a>
         <small> by <a href={`https://reddit.com/u/${data.data.author}`}>{data.data.author}</a> </small>
         <small>{moment(data.data.created_utc * 1000).fromNow()}</small>

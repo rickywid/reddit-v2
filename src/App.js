@@ -181,7 +181,6 @@ class App extends Component {
     const { form } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue('keys');
-    console.log(keys)
     const nextKeys = keys.concat(id++);
     // can use data-binding to set
     // important! notify form to detect changes
@@ -194,7 +193,8 @@ class App extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const { names } = values;
+        let { names } = values;
+        names = names.filter(name=> name !== null || 'undefined');
         localStorage.setItem("subreddits", JSON.stringify(names));
         this.setState({ 
           subreddits: names,
@@ -274,9 +274,9 @@ class App extends Component {
     })    
   }
 
-  renderList(list) {
+  renderList(list, key) {
     return (
-      <SubredditSuggestions>
+      <SubredditSuggestions key={key}>
         <SubredditCategory>{list.category_name}</SubredditCategory>
         <SubredditList>
           {list.subreddit.map((sub, index) => {
@@ -295,7 +295,6 @@ class App extends Component {
 
     getFieldDecorator('keys', {initialValue: [0]});
     const keys = getFieldValue('keys');
-    console.log(keys)
     const formItems = keys.map((k, index) => (
       <Form.Item
         required={false}
@@ -363,7 +362,7 @@ class App extends Component {
             <SubredditSuggestionsWrapper>
                 <SubredditSuggestHeader>New to <a href="https://reddit.com">Reddit</a>? Explore some of the popular subreddits</SubredditSuggestHeader>
                 <SubredditListWrapper>
-                  {subreddits.map((list)=>this.renderList(list))}
+                  {subreddits.map((list, index)=>this.renderList(list, index))}
                 </SubredditListWrapper>
             </SubredditSuggestionsWrapper>
             <RocketSVG style={{position: 'absolute', right: -100, bottom: -50, height: 200, width: 'auto'}}/>    

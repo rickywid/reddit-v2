@@ -9,7 +9,7 @@ export const subreddits = [
 			},
 			{ 
 				label: 'Today I Learned', 
-				sub: 'til',
+				sub: 'todayilearned',
 				description: 'Read stories of what people have learned today'
 			},
 			{ 
