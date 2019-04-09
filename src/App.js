@@ -42,6 +42,10 @@ const Card = styled.div`
   box-shadow: 0 1px 7px 1px rgba(0,0,0,.4);
   margin-bottom: 3rem;
   flex-basis: 45%;
+
+  @media (min-width: 500px) {
+    margin-bottom: 0;
+  }  
 `
 const CardHeader = styled.div`
   background: #250448 none repeat scroll 0% 0%;

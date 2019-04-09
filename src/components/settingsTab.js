@@ -88,7 +88,7 @@ class SettingsTab extends Component {
 
   displayInput(subreddit, key) {
     return (
-      <div className="new-sub__wrap" key={key}>
+      <div style={{zIndex: 1, position: 'relative'}}>
           <input className="new-sub__input animated fadeIn" style={{padding: '8px', marginBottom: '1rem', marginRight: '10px'}} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
           <Icon
             className="dynamic-delete-button"
@@ -124,12 +124,12 @@ class SettingsTab extends Component {
           className="drawer"
         >
           {this.state.updatedSubs.map(this.displayInput.bind(this))}
-            <Form.Item style={{display: 'inline-block', marginRight: '1rem'}}>
+            <Form.Item style={{display: 'inline-block', marginRight: '1rem', zIndex: 1}}>
               <Button type="dashed" onClick={this.addInput}>
                 <Icon type="plus" /> Add Subreddit
               </Button>
             </Form.Item>
-            <Form.Item style={{display: 'inline-block'}}>
+            <Form.Item style={{display: 'inline-block', zIndex: 1}}>
               <Button type="primary" onClick={this.saveSubs}>Submit</Button>
             </Form.Item>          
         </Drawer>
