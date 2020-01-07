@@ -8,16 +8,20 @@ import styled from 'styled-components';
 library.add(faImage, faStar, faVideo);
 
 const Wrapper = styled.div`
-  background: #250448;
   margin-bottom: 2rem;
-  padding: 1rem;
+  padding: 1rem 0;
 
   h2 {
-    color: #f60261
+    color: #f60261;
+    display: inline-block;
+
+    &:hover {
+      color: #f602616e;
+    }
   }
 
   @media (min-width: 600px) {
-    padding: 3rem;  
+    padding: 3rem 0;
   }
 
 `
@@ -30,6 +34,10 @@ const ListItem = styled.li`
 
   a {
     color: white;
+
+    &:hover {
+      color: yellow;
+    }
   }
   small {
     color: #fdcb01; 
@@ -55,7 +63,6 @@ class SubReddit extends Component {
   }
     
   displayLinks(data, key) {
-
     const isStickied = data.data.stickied ? 'stickied' : '';
     const isGilded = data.data.gilded > 0 ? <FontAwesomeIcon className="icon-link icon--star" icon="star" /> : '';
     const isImage = data.data.link_flair_text === "image" || data.data.link_flair_text === "Picture" ? <FontAwesomeIcon className="icon-link icon--image" icon="image" /> : '';
@@ -84,7 +91,7 @@ class SubReddit extends Component {
 
     return (
       <Wrapper className="animated fadeIn">
-        <a className="subreddit-title" href={`https://reddit.com/${data[0].data.permalink}`}>
+        <a className="subreddit-title" href={`https://reddit.com/${data[0].data.subreddit}`}>
           <h2>{data[0].data.subreddit}</h2>
         </a>
         <List>

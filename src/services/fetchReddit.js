@@ -7,7 +7,12 @@ export default class fetchReddit {
 		  })
 		  .then(function(myJson) {
 		    return myJson.data.children;
-		  });
+		  })
+      .catch(err => {
+        let subs = JSON.parse(localStorage.getItem("subreddits"));
+        subs.splice(subs.indexOf(subreddit), 1);
+        localStorage.setItem("subreddits", JSON.stringify(subs));
+      });
 	}
 
 	getData(subreddits){

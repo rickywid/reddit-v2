@@ -1,7 +1,6 @@
 body {
-	background: url(https://res.cloudinary.com/dzeqj2xv1/image/upload/v1554657561/background-1789175_1280.png);
+  background: #121224 !important;
 	padding-bottom: 8rem;
-	/*overflow: hidden;*/
 }
 
 .dynamic-delete-button {
@@ -29,6 +28,11 @@ body {
 	background-color: #f60261 !important;
 	border-color: #f60261 !important;
 	font-weight: bold !important;
+}
+
+.ant-btn-primary:hover {
+  border: 1px solid #f60261;
+  background: #f602616e !important;
 }
 
 .ant-form {
@@ -79,7 +83,11 @@ body {
 }
 
 .ant-drawer-wrapper-body {
-	background: #250448 !important;
+	background: #121224 !important;
+}
+
+.ant-drawer-wrapper .new-sub__input {
+  background: transparent !important;
 }
 
 .ant-drawer-wrapper-body:after{

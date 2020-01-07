@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { subreddits } from './data/data';
 import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
 // import { ReactComponent as StarsSVG } from './assets/icons/falling-star.svg';
+import { message } from 'antd';
 
 import {
   Form, Input, Icon, Button, notification
@@ -146,7 +147,8 @@ class App extends Component {
 
     this.state = {
       subreddits: [],
-      subredditsData: [],
+      invalidSubreddits: [],
+      subredditsData: [], // JSON data
       showInitialSetup: true
     }
   }
@@ -208,16 +210,23 @@ class App extends Component {
   }
 
 
+  validateSubs = (subs) => {
+    const validSubs = subs.filter(sub => sub !== undefined);
+    this.setState({
+      invalidSubreddits: subs.filter(sub => sub === undefined),
+    });
+    return validSubs;
 
-
+  }
 
   async getData() {
 
     const subs = JSON.parse(localStorage.getItem("subreddits"));
     const fetch = new fetchReddit();
     const data = await fetch.getData(subs);
+    this.setState({ subredditsData: this.validateSubs(data) });
 
-    this.setState({ subredditsData: data });
+    if(this.state.invalidSubreddits.length) message.error('Some subreddits could not be loaded');
   }
 
   updateSubReddit(subreddits, type) {
@@ -290,7 +299,6 @@ class App extends Component {
   }
 
   render() {
-
     const { getFieldDecorator, getFieldValue } = this.props.form;
 
     getFieldDecorator('keys', {initialValue: [0]});
