@@ -16,23 +16,23 @@ self.__precacheManifest = [
     "url": "/reddit-v2/static/js/runtime~main.62511f41.js"
   },
   {
-    "revision": "46ffe7e67952b5d8fdd9",
-    "url": "/reddit-v2/static/js/main.46ffe7e6.chunk.js"
+    "revision": "0e02d17ffacb9adb7daf",
+    "url": "/reddit-v2/static/js/main.0e02d17f.chunk.js"
   },
   {
-    "revision": "0e752b6d8931ebda6372",
-    "url": "/reddit-v2/static/js/1.0e752b6d.chunk.js"
+    "revision": "de6b0e4101bc93ddd3fa",
+    "url": "/reddit-v2/static/js/1.de6b0e41.chunk.js"
   },
   {
-    "revision": "46ffe7e67952b5d8fdd9",
-    "url": "/reddit-v2/static/css/main.b4af7bac.chunk.css"
+    "revision": "0e02d17ffacb9adb7daf",
+    "url": "/reddit-v2/static/css/main.c694a86d.chunk.css"
   },
   {
-    "revision": "0e752b6d8931ebda6372",
+    "revision": "de6b0e4101bc93ddd3fa",
     "url": "/reddit-v2/static/css/1.de380d2d.chunk.css"
   },
   {
-    "revision": "57d4da97cda4933c604f43e1619231ae",
+    "revision": "2275e3fd058d71f5542a3306e53ee9f1",
     "url": "/reddit-v2/index.html"
   }
 ];
