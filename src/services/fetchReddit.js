@@ -1,4 +1,4 @@
-export default class fetchReddit {
+export default class FetchReddit {
 
 	getSubreddit(subreddit){
 		return fetch(`https://www.reddit.com/r/${subreddit}.json`)

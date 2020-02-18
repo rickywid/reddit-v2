@@ -1,4 +1,4 @@
-export const subreddits = [
+export const defaultData = [
 	{
 		category_name: 'Popular',
 		subreddit: [
