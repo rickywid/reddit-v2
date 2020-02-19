@@ -125,7 +125,7 @@ const SubsWrapper = styled.div``;
 const openNotificationWithIcon = (type, label, sub, description) => {
   notification[type]({
     message: `${label}`,
-    description: <div dangerouslySetInnerHTML={{ html: `<p>${description}</p><a target="_blank" href='https://reddit.com/r/${sub}'>Preview</a>` }} />,
+    description: <div dangerouslySetInnerHTML={{ __html: `<p>${description}</p><a target="_blank" href='https://reddit.com/r/${sub}'>Preview</a>` }} />,
   });
 };
 
@@ -153,27 +153,13 @@ class App extends Component {
     }
   }
 
-  getData = async () => {
-    const { invalidSubreddits } = this.state;
+  async getData() {
     const subs = JSON.parse(localStorage.getItem('subreddits'));
     const fetch = new FetchReddit();
     const data = await fetch.getData(subs);
     this.setState({ subredditsData: this.validateSubs(data) });
 
-    if (invalidSubreddits.length) message.error('Some subreddits could not be loaded');
-  }
-
-  add = () => {
-    const { form } = this.props;
-    // can use data-binding to get
-    const keys = form.getFieldValue('keys');
-    id += 1;
-    const nextKeys = keys.concat(id);
-    // can use data-binding to set
-    // important! notify form to detect changes
-    form.setFieldsValue({
-      keys: nextKeys,
-    });
+    if (this.state.invalidSubreddits.length) message.error('Some subreddits could not be loaded');
   }
 
   remove = (k) => {
@@ -191,13 +177,17 @@ class App extends Component {
     });
   }
 
-
-  validateSubs = (subs) => {
-    const validSubs = subs.filter(sub => sub !== undefined);
-    this.setState({
-      invalidSubreddits: subs.filter(sub => sub === undefined),
+  add = () => {
+    const { form } = this.props;
+    id += 1;
+    // can use data-binding to get
+    const keys = form.getFieldValue('keys');
+    const nextKeys = keys.concat(id);
+    // can use data-binding to set
+    // important! notify form to detect changes
+    form.setFieldsValue({
+      keys: nextKeys,
     });
-    return validSubs;
   }
 
   handleSubmit = (e) => {
@@ -219,6 +209,14 @@ class App extends Component {
         });
       }
     });
+  }
+
+  validateSubs = (subs) => {
+    const validSubs = subs.filter(sub => sub !== undefined);
+    this.setState({
+      invalidSubreddits: subs.filter(sub => sub === undefined),
+    });
+    return validSubs;
   }
 
   updateSubReddit = (updatedSubs, type) => {
@@ -274,12 +272,12 @@ class App extends Component {
     ));
   }
 
-  renderList = (list, key) => (
-    <SubredditSuggestions key={key}>
+  renderList = list => (
+    <SubredditSuggestions key={`${list}-${Math.random()}`}>
       <SubredditCategory>{list.category_name}</SubredditCategory>
       <SubredditList>
-        {list.subreddit.map(sub => (
-          <SubredditItem key={sub} onClick={() => openNotificationWithIcon('info', sub.label, sub.sub, sub.description)}>{sub.sub}</SubredditItem>
+        {list.subreddit.map((sub, key) => (
+          <SubredditItem key={key} onClick={() => openNotificationWithIcon('info', sub.label, sub.sub, sub.description)}>{sub.sub}</SubredditItem>
         ))}
       </SubredditList>
     </SubredditSuggestions>
@@ -401,7 +399,6 @@ class App extends Component {
     );
   }
 }
-
 
 App.propTypes = {
   form: PropTypes.shape({
