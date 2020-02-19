@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCog, faPlus, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { Button, Drawer, Form, Icon, message } from 'antd';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faCog,
+  faPlus,
+  faCheck,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  Button,
+  Drawer,
+  Form,
+  Icon,
+  message,
+} from 'antd';
+import PropTypes from 'prop-types';
 
 library.add(faCog, faPlus, faCheck, faTimes);
 
@@ -16,15 +28,18 @@ class SettingsTab extends Component {
 
     this.state = {
       updatedSubs: [],
-      visible: false
-    }
+      visible: false,
+    };
   }
 
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
+  componentDidMount() {
+    const { subreddits } = this.props;
+    this.setState({ updatedSubs: subreddits });
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    return { updatedSubs: nextProps.subreddits };
+  }
 
   onClose = () => {
     this.setState({
@@ -32,109 +47,105 @@ class SettingsTab extends Component {
     });
   };
 
-  componentDidMount() {
-
-    this.setState({ updatedSubs: this.props.subreddits});
-  }
-
-  static getDerivedStateFromProps(nextProps, prevProps) {
-
-    return { updatedSubs: nextProps.subreddits }
-  }
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
 
   handleChange(e) {
+    const { name, value } = e.target;
 
-    const index = e.target.name;
-    const value = e.target.value; 
-
-    this.setState( prevState => {
-
+    this.setState((prevState) => {
       const state = { ...prevState };
 
-      state['updatedSubs'][index] = value;
+      state.updatedSubs[name] = value;
 
       return state;
-    })
+    });
   }
 
   addInput() {
-
-    this.setState( prevState => {
-
+    this.setState((prevState) => {
       const state = { ...prevState };
 
-      state['updatedSubs'] = state['updatedSubs'].push('');
+      state.updatedSubs = state.updatedSubs.push('');
 
       return state;
     });
   }
 
   deleteInput(id) {
-
-    this.setState( prevState => {
-
+    const { updateSubs } = this.props;
+    this.setState((prevState) => {
       const state = { ...prevState };
-
-      state['updatedSubs'] = state['updatedSubs'].splice(id, 1);
-  
-      this.props.updateSubs(this.state.updatedSubs, 'delete')
+      state.updatedSubs.splice(id, 1);
+      updateSubs(state.updatedSubs, 'delete');
 
       return state;
-    }, ()=>{
+    }, () => {
       message.success('Removed');
     });
   }
 
   displayInput(subreddit, key) {
     return (
-      <div key={key} style={{zIndex: 1, position: 'relative'}}>
-          <input className="new-sub__input animated fadeIn" style={{padding: '8px', marginBottom: '1rem', marginRight: '10px'}} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required/>
-          <Icon
-            className="dynamic-delete-button"
-            type="minus-circle-o"
-            onClick={this.deleteInput.bind(this, key)}
-          />
+      <div key={key} style={{ zIndex: 1, position: 'relative' }}>
+        <input className="new-sub__input animated fadeIn" style={{ padding: '8px', marginBottom: '1rem', marginRight: '10px' }} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required />
+        <Icon
+          className="dynamic-delete-button"
+          type="minus-circle-o"
+          onClick={() => this.deleteInput(key)}
+        />
       </div>
-    )
+    );
   }
 
   saveSubs() {
+    const { updatedSubs } = this.state;
+    const { updateSubs } = this.props;
     this.setState({ visible: false }, () => {
       message.success('Updated');
-      this.props.updateSubs(this.state.updatedSubs, 'add');
+      updateSubs(updatedSubs, 'add');
     });
   }
 
   render() {
-
+    const { visible, updatedSubs } = this.state;
 
     return (
-      <div style={{lineHeight: 0}}>
+      <div style={{ lineHeight: 0 }}>
         <Button className="manage-btn" type="primary" onClick={this.showDrawer}>
           Manage
         </Button>
         <Drawer
           title="Manage Subreddits"
           placement="right"
-          closable={true}
+          closable
           onClose={this.onClose}
-          visible={this.state.visible}
-          width={'auto'}
+          visible={visible}
+          width="auto"
           className="drawer"
         >
-          {this.state.updatedSubs.map(this.displayInput.bind(this))}
-            <Form.Item style={{display: 'inline-block', marginRight: '1rem', zIndex: 1}}>
-              <Button type="dashed" onClick={this.addInput}>
-                <Icon type="plus" /> Add Subreddit
-              </Button>
-            </Form.Item>
-            <Form.Item style={{display: 'inline-block', zIndex: 1}}>
-              <Button type="primary" onClick={this.saveSubs}>Submit</Button>
-            </Form.Item>          
+          {updatedSubs.map(this.displayInput.bind(this))}
+          <Form.Item style={{ display: 'inline-block', marginRight: '1rem', zIndex: 1 }}>
+            <Button type="dashed" onClick={this.addInput}>
+              <Icon type="plus" />
+              Add Subreddit
+            </Button>
+          </Form.Item>
+          <Form.Item style={{ display: 'inline-block', zIndex: 1 }}>
+            <Button type="primary" onClick={this.saveSubs}>Submit</Button>
+          </Form.Item>
         </Drawer>
-      </div>        
-    );      
+      </div>
+    );
   }
 }
+
+SettingsTab.propTypes = {
+  subreddits: PropTypes.shape([]).isRequired,
+  updateSubs: PropTypes.func.isRequired,
+};
 
 export default SettingsTab;

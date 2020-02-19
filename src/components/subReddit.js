@@ -101,7 +101,11 @@ class SubReddit extends Component {
 }
 
 SubReddit.propTypes = {
-  data: PropTypes.shape([]).isRequired,
+  data: PropTypes.shape([]),
+};
+
+SubReddit.defaultProps = {
+  data: null,
 };
 
 export default SubReddit;
