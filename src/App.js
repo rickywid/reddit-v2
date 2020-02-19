@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types';
 import SubReddit from './components/subReddit';
 import SettingsTab from './components/settingsTab';
-import { defaultData } from './data/data';
+import defaultData from './data/data';
 import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
 import FetchReddit from './services/fetchReddit';
 
