@@ -144,7 +144,8 @@ class SettingsTab extends Component {
 }
 
 SettingsTab.propTypes = {
-  subreddits: PropTypes.shape([]).isRequired,
+  subreddits: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
+    .isRequired,
   updateSubs: PropTypes.func.isRequired,
 };
 

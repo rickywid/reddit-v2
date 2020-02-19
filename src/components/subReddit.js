@@ -101,7 +101,7 @@ class SubReddit extends Component {
 }
 
 SubReddit.propTypes = {
-  data: PropTypes.shape([]),
+  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.shape({ data: PropTypes.shape({}) })])),
 };
 
 SubReddit.defaultProps = {
