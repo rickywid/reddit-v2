@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import fetchReddit from './services/fetchReddit';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
+import {
+  Form, Input, Icon, Button, notification, message,
+} from 'antd';
+import PropTypes from 'prop-types';
 import SubReddit from './components/subReddit';
 import SettingsTab from './components/settingsTab';
-// import { Button } from './assets/styled-components/button';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import styled from 'styled-components';
-import { subreddits } from './data/data';
+import defaultData from './data/data';
 import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
-// import { ReactComponent as StarsSVG } from './assets/icons/falling-star.svg';
-import { message } from 'antd';
-
-import {
-  Form, Input, Icon, Button, notification
-} from 'antd';
+import FetchReddit from './services/fetchReddit';
 
 let id = 1;
 
@@ -26,17 +23,15 @@ const BodyWrapper = styled.div`
   @media (min-width: 500px) {
     padding: 2rem 4rem;  
   }
-`
-
+`;
 const NavBar = styled.nav`
   color: white;
   font-size: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between; 
-` 
+`;
 const Card = styled.div`
-  
   position: relative;
   background: #f60261;
   border-radius: 5px;
@@ -47,7 +42,7 @@ const Card = styled.div`
   @media (min-width: 500px) {
     margin-bottom: 0;
   }  
-`
+`;
 const CardHeader = styled.div`
   background: #250448 none repeat scroll 0% 0%;
   padding: 1.5rem 2rem;
@@ -67,46 +62,46 @@ const CardHeader = styled.div`
       right: 36px;
     }    
   }
-`
+`;
 const SubredditSuggestionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-`
+`;
 const SubredditSuggestions = styled.div`
   flex-grow: 1;
   flex-basis: 33%;
   padding: 0.5rem 0;
-`
+`;
 const SubredditCategory = styled.p`
   color: #f60261;
   font-weight: bold;
   margin: 0;
-`
+`;
 const SubredditList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;  
-`
+`;
 const SubredditItem = styled.li`
   :hover {
     color: #111;
     cursor: pointer;
   }
-`
+`;
 const SubredditSuggestHeader = styled.p`
   display: block;
   width: 100%;
   text-align: center;
   font-weight: bold;
   margin-bottom: 2rem;
-`
+`;
 const SubredditListWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-self: flex-start;
-`
+`;
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -124,20 +119,17 @@ const SectionWrapper = styled.div`
     border: 27px solid #250448;
       width: 1200px;
   }  
-`
-const SubsWrapper = styled.div`
-
-`
+`;
+const SubsWrapper = styled.div``;
 
 const openNotificationWithIcon = (type, label, sub, description) => {
   notification[type]({
     message: `${label}`,
-    description: <div dangerouslySetInnerHTML={{__html: `<p>${description}</p><a target="_blank" href='https://reddit.com/r/${sub}'>Preview</a>`}} />
+    description: <div dangerouslySetInnerHTML={{ __html: `<p>${description}</p><a target="_blank" href='https://reddit.com/r/${sub}'>Preview</a>` }} />,
   });
 };
 
 class App extends Component {
-
   constructor() {
     super();
 
@@ -149,19 +141,25 @@ class App extends Component {
       subreddits: [],
       invalidSubreddits: [],
       subredditsData: [], // JSON data
-      showInitialSetup: true
+      showInitialSetup: true,
+    };
+  }
+
+  componentDidMount = () => {
+    // if there is already saved data in local storage, bypass initial screen
+    // if local storage is empty or not items set then show initial screen
+    if (JSON.parse(localStorage.getItem('subreddits')) !== null) {
+      this.setState({ showInitialSetup: false }, () => this.getData());
     }
   }
 
-  componentDidMount() {
+  async getData() {
+    const subs = JSON.parse(localStorage.getItem('subreddits'));
+    const fetch = new FetchReddit();
+    const data = await fetch.getData(subs);
+    this.setState({ subredditsData: this.validateSubs(data) });
 
-    // if there is already saved data in local storage, bypass initial screen
-    // if local storage is empty or not items set then show initial screen
-    if(JSON.parse(localStorage.getItem("subreddits")) !== null) {
-
-      this.setState({ showInitialSetup: false }, ()=>this.getData());
-
-    };
+    if (this.state.invalidSubreddits.length) message.error('Some subreddits could not be loaded');
   }
 
   remove = (k) => {
@@ -181,9 +179,10 @@ class App extends Component {
 
   add = () => {
     const { form } = this.props;
+    id += 1;
     // can use data-binding to get
     const keys = form.getFieldValue('keys');
-    const nextKeys = keys.concat(id++);
+    const nextKeys = keys.concat(id);
     // can use data-binding to set
     // important! notify form to detect changes
     form.setFieldsValue({
@@ -192,23 +191,25 @@ class App extends Component {
   }
 
   handleSubmit = (e) => {
+    const { form } = this.props;
+    const { subreddits } = this.state;
+    const { validateFields } = form;
+
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    validateFields((err, values) => {
       if (!err) {
         let { names } = values;
-        names = names.filter(name=> name !== null || 'undefined');
-        localStorage.setItem("subreddits", JSON.stringify(names));
-        this.setState({ 
+        names = names.filter(name => name !== null || 'undefined');
+        localStorage.setItem('subreddits', JSON.stringify(names));
+        this.setState({
           subreddits: names,
-          showInitialSetup: false
-        }, ()=> { 
-          this.getData(this.state.subreddits)
-          }
-        );
+          showInitialSetup: false,
+        }, () => {
+          this.getData(subreddits);
+        });
       }
     });
   }
-
 
   validateSubs = (subs) => {
     const validSubs = subs.filter(sub => sub !== undefined);
@@ -216,94 +217,86 @@ class App extends Component {
       invalidSubreddits: subs.filter(sub => sub === undefined),
     });
     return validSubs;
-
   }
 
-  async getData() {
+  updateSubReddit = (updatedSubs, type) => {
+    const {
+      form: {
+        setFieldsValue,
+      },
+    } = this.props;
 
-    const subs = JSON.parse(localStorage.getItem("subreddits"));
-    const fetch = new fetchReddit();
-    const data = await fetch.getData(subs);
-    this.setState({ subredditsData: this.validateSubs(data) });
-
-    if(this.state.invalidSubreddits.length) message.error('Some subreddits could not be loaded');
-  }
-
-  updateSubReddit(subreddits, type) {
-    
     // if local storage is empty, show initial screen & reset state
-    if(type === 'delete' && subreddits.length === 0) {
-        
-      localStorage.removeItem("subreddits");
-      this.props.form.setFieldsValue({
+    if (type === 'delete' && updatedSubs.length === 0) {
+      localStorage.removeItem('subreddits');
+      setFieldsValue({
         keys: [0],
       });
-      this.setState({ 
-        showInitialSetup: true, 
-        subreddits: [] 
+      this.setState({
+        showInitialSetup: true,
+        subreddits: [],
       });
-    
-    return;
-    
-    } 
+      return;
+    }
 
     // if local storage has data then update local storage and fetch data
-    localStorage.setItem("subreddits", JSON.stringify(subreddits));
+    localStorage.setItem('subreddits', JSON.stringify(updatedSubs));
 
-    this.setState({ 
-      showInitialSetup: false 
+    this.setState({
+      showInitialSetup: false,
     }, () => {
-      this.getData(JSON.parse(localStorage.getItem("subreddits")));
+      this.getData(JSON.parse(localStorage.getItem('subreddits')));
     });
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
+    const { index, value } = e.target.value;
 
-    const index = e.target.name;
-    const value = e.target.value;
-
-    this.setState( prevState => {
-      
+    this.setState((prevState) => {
       const state = { ...prevState };
 
-      state['subreddits'][index] = value;
-
+      state.subreddits[index] = value;
       return state;
-    })
+    });
   }
 
-  displaySubs() {
-    return JSON.parse(localStorage.getItem("subreddits")).map((subreddit, key)=>{
-      return <SubReddit 
-                key={key} 
-                id={key}
-                data={this.state.subredditsData[key]} 
-                data2={JSON.parse(localStorage.getItem("subreddits"))}
-            />
-    })    
+  displaySubs = () => {
+    const { subredditsData } = this.state;
+    return JSON.parse(localStorage.getItem('subreddits')).map((subreddit, key) => (
+      <SubReddit
+        key={subreddit}
+        id={key}
+        data={subredditsData[key]}
+        data2={JSON.parse(localStorage.getItem('subreddits'))}
+      />
+    ));
   }
 
-  renderList(list, key) {
-    return (
-      <SubredditSuggestions key={key}>
-        <SubredditCategory>{list.category_name}</SubredditCategory>
-        <SubredditList>
-          {list.subreddit.map((sub, index) => {
-            return (
-              <SubredditItem key={`${sub}${index}`} onClick={() => openNotificationWithIcon('info', sub.label, sub.sub, sub.description)}>{sub.sub}</SubredditItem>
-            )
-          })}   
-        </SubredditList>
-      </SubredditSuggestions>
-    )
-  }
+  renderList = list => (
+    <SubredditSuggestions key={`${list}-${Math.random()}`}>
+      <SubredditCategory>{list.category_name}</SubredditCategory>
+      <SubredditList>
+        {list.subreddit.map((sub, key) => (
+          <SubredditItem key={key} onClick={() => openNotificationWithIcon('info', sub.label, sub.sub, sub.description)}>{sub.sub}</SubredditItem>
+        ))}
+      </SubredditList>
+    </SubredditSuggestions>
+  );
 
-  render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+  render = () => {
+    const {
+      form: {
+        getFieldDecorator,
+        getFieldValue,
+      },
+    } = this.props;
+    const { form } = this.props;
 
-    getFieldDecorator('keys', {initialValue: [0]});
+    const { showInitialSetup } = this.state;
+
+    getFieldDecorator('keys', { initialValue: [0] });
     const keys = getFieldValue('keys');
-    const formItems = keys.map((k, index) => (
+    const formItems = keys.map(k => (
       <Form.Item
         required={false}
         key={k}
@@ -313,10 +306,10 @@ class App extends Component {
           rules: [{
             required: true,
             whitespace: true,
-            message: "Required",
+            message: 'Required',
           }],
         })(
-          <Input placeholder="e.g: showerthoughts" style={{ width: '75%', marginRight: 8 }} />
+          <Input placeholder="e.g: showerthoughts" style={{ width: '75%', marginRight: 8 }} />,
         )}
         {keys.length > 1 ? (
           <Icon
@@ -324,7 +317,7 @@ class App extends Component {
             type="minus-circle-o"
             disabled={keys.length === 1}
             onClick={() => this.remove(k)}
-            style={{fill: '#fdcb01'}}
+            style={{ fill: '#fdcb01' }}
           />
         ) : null}
       </Form.Item>
@@ -332,61 +325,99 @@ class App extends Component {
 
     return (
       <BodyWrapper>
-
         <NavBar>
-          <p style={{margin: 0}}>reddit</p>
-       
-          {!this.state.showInitialSetup 
-            ?           
-            <SettingsTab  
-              subreddits={JSON.parse(localStorage.getItem("subreddits"))} 
+          <p style={{ margin: 0 }}>reddit</p>
+          {!showInitialSetup ? (
+            <SettingsTab
+              subreddits={JSON.parse(localStorage.getItem('subreddits'))}
               updateSubs={this.updateSubReddit}
-              form={this.props.form}
-          /> : ""
-        }
+              form={form}
+            />
+          ) : ''
+          }
         </NavBar>
 
-        {this.state.showInitialSetup 
-          ? 
-        <div className="animated fadeIn">
-          <SectionWrapper style={{position: 'relative'}}>
-            <Card>
-              <CardHeader>
-                <p className= "x" style={{fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0}}>Lets Get Started</p>
-                <p style={{color: '#ccc', margin: 0, padding: 0, fontSize: 12}}>Start adding some of your favourite subreddits</p>
-              </CardHeader>
-                  <Form onSubmit={this.handleSubmit}>
-                    {formItems}
-                    <Form.Item style={{display: 'inline-block', marginRight: '1rem'}}>
-                      <Button type="dashed" onClick={this.add}>
-                        <Icon type="plus" /> Add Subreddit
-                      </Button>
-                    </Form.Item>
-                    <Form.Item style={{display: 'inline-block'}}>
-                      <Button htmlType="submit">Submit</Button>
-                    </Form.Item>
-                  </Form>
-            </Card>
-            <SubredditSuggestionsWrapper>
-                <SubredditSuggestHeader>New to <a href="https://reddit.com">Reddit</a>? Explore some of the popular subreddits</SubredditSuggestHeader>
+        {showInitialSetup ? (
+          <div className="animated fadeIn">
+            <SectionWrapper style={{ position: 'relative' }}>
+              <Card>
+                <CardHeader>
+                  <p
+                    className="x"
+                    style={{
+                      fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0,
+                    }}
+                  >
+                    Lets Get Started
+                  </p>
+                  <p style={{
+                    color: '#ccc', margin: 0, padding: 0, fontSize: 12,
+                  }}
+                  >
+                    Start adding some of your favourite subreddits
+                  </p>
+                </CardHeader>
+                <Form onSubmit={this.handleSubmit}>
+                  {formItems}
+                  <Form.Item style={{ display: 'inline-block', marginRight: '1rem' }}>
+                    <Button type="dashed" onClick={this.add}>
+                      <Icon type="plus" />
+                      Add Subreddit
+                    </Button>
+                  </Form.Item>
+                  <Form.Item style={{ display: 'inline-block' }}>
+                    <Button htmlType="submit">Submit</Button>
+                  </Form.Item>
+                </Form>
+              </Card>
+              <SubredditSuggestionsWrapper>
+                <SubredditSuggestHeader>
+                  New to
+                  <a href="https://reddit.com">Reddit</a>
+                  ? Explore some of the popular subreddits
+                </SubredditSuggestHeader>
                 <SubredditListWrapper>
-                  {subreddits.map((list, index)=>this.renderList(list, index))}
+                  {defaultData.map((list, index) => this.renderList(list, index))}
                 </SubredditListWrapper>
-            </SubredditSuggestionsWrapper>
-            <RocketSVG style={{position: 'absolute', right: -100, bottom: -50, height: 200, width: 'auto'}}/>    
-          </SectionWrapper>
-        </div>
-          : 
-        <div className="App">
-          <SubsWrapper>
-            {this.displaySubs()}
-          </SubsWrapper>
-        </div>
+              </SubredditSuggestionsWrapper>
+              <RocketSVG style={{
+                position: 'absolute', right: -100, bottom: -50, height: 200, width: 'auto',
+              }}
+              />
+            </SectionWrapper>
+          </div>
+        )
+          : (
+            <div className="App">
+              <SubsWrapper>
+                {this.displaySubs()}
+              </SubsWrapper>
+            </div>
+          )
         }
       </BodyWrapper>
-    )
+    );
   }
 }
+
+App.propTypes = {
+  form: PropTypes.shape({
+    setFieldsValue: PropTypes.func,
+    getFieldValue: PropTypes.func,
+    getFieldDecorator: PropTypes.func,
+    validateFields: PropTypes.func,
+  }).isRequired,
+};
+
+/*
+  optionalArray: PropTypes.array,
+  optionalBool: PropTypes.bool,
+  optionalFunc: PropTypes.func,
+  optionalNumber: PropTypes.number,
+  optionalObject: PropTypes.object,
+  optionalString: PropTypes.string,
+  optionalSymbol: PropTypes.symbol,
+*/
 
 const AppWrapper = Form.create({ name: 'app' })(App);
 
