@@ -89,6 +89,7 @@ class SettingsTab extends Component {
   }
 
   displayInput(subreddit, key) {
+    console.log(subreddit)
     return (
       <div key={key} style={{ zIndex: 1, position: 'relative' }}>
         <input className="new-sub__input animated fadeIn" style={{ padding: '8px', marginBottom: '1rem', marginRight: '10px' }} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required />
