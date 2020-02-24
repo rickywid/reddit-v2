@@ -11,6 +11,7 @@ import SettingsTab from './components/settingsTab';
 import defaultData from './data/data';
 import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
 import FetchReddit from './services/fetchReddit';
+import { ReactComponent as UploadIcon } from './assets/icons/upload.svg';
 
 let id = 1;
 
@@ -120,49 +121,24 @@ const SectionWrapper = styled.div`
       width: 1200px;
   }  
 `;
-const Pill = styled.a`
-  background: ${props => props.color};
-  display: block;
-  padding: 5px 10px;
-  margin-bottom: 5px;
-  border-radius-top-left: 3px;
-  border-radius-bottom-left: 3px;
-  color: white;
 
-  &:hover {
-    color: white;
-  }
-`;
 const SubsWrapper = styled.div``;
 
-const Sidebar = styled.div`
+const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
   position: fixed;
-  right: ${props => (props.isOpen ? 0 : '-135px')} 
-  top: 20%;
-  transition: right .3s;
-
-  @media only screen and (min-width: 500px) {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 155px;
-    height: 100vh;
-    display: flex;
-  }
+  bottom: 20px;
+  right 20px;
+}
 `;
 
-const SidebarInner = styled.div`
-  @media only screen and (min-width: 500px) {
-      position: relative;
-      align-self: center;
+const UploadIconStyle = styled(UploadIcon)`
+  height: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
 `;
-
-const SidebarButton = styled.button`
-  position: absolute;
-  top: 0;
-  left: -55px;
-`;
-
 
 const openNotificationWithIcon = (type, label, sub, description) => {
   notification[type]({
@@ -327,18 +303,12 @@ class App extends Component {
   );
 
   generateColor = () => {
-    console.log('generate');
-
     const letters = '0123456789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
-
-  openSidebar = () => {
-    this.setState({ sidebarIsOpen: !this.state.sidebarIsOpen })
   }
 
   render = () => {
@@ -382,7 +352,7 @@ class App extends Component {
     ));
 
     return (
-      <BodyWrapper>
+      <BodyWrapper id="nav">
         <NavBar>
           <p style={{ margin: 0 }}>reddit</p>
           {!showInitialSetup ? (
@@ -449,13 +419,10 @@ class App extends Component {
             <div className="App">
               <SubsWrapper>
                 {this.displaySubs()}
-                <Sidebar isOpen={this.state.sidebarIsOpen}>
-                  <SidebarInner>
-                    {JSON.parse(localStorage.getItem('subreddits')).map(subreddit => <Pill href={`#${subreddit}`} color={this.generateColor()}>{subreddit}</Pill>)}
-                    <SidebarButton onClick={() => this.openSidebar()}>Open</SidebarButton>
-                  </SidebarInner>
-                </Sidebar>
               </SubsWrapper>
+              <BottomWrapper>
+                <a href="#nav"><UploadIconStyle /></a>
+              </BottomWrapper>
             </div>
           )
         }
