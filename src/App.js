@@ -18,12 +18,7 @@ let id = 1;
 library.add(faTimes);
 
 const BodyWrapper = styled.div`
-  // padding: 1rem;
   overflow: hidden;
-  
-  @media (min-width: 500px) {
-    // padding: 2rem 4rem;  
-  }
 `;
 const NavBar = styled.nav`
   color: white;
