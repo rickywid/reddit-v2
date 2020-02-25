@@ -15,6 +15,8 @@ const Wrapper = styled.div`
   h2 {
     color: #f60261;
     display: inline-block;
+    font-weight: bold;
+    transition: color .2s;
 
     &:hover {
       color: #f602616e;
@@ -32,6 +34,7 @@ const List = styled.ul`
 `;
 const ListItem = styled.li`
   list-style: none;
+  margin-bottom: 0.3rem;
 
   a {
     color: white;

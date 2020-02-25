@@ -18,19 +18,29 @@ let id = 1;
 library.add(faTimes);
 
 const BodyWrapper = styled.div`
-  padding: 1rem;
+  // padding: 1rem;
   overflow: hidden;
   
   @media (min-width: 500px) {
-    padding: 2rem 4rem;  
+    // padding: 2rem 4rem;  
   }
 `;
 const NavBar = styled.nav`
   color: white;
-  font-size: 48px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between; 
+  background: #201f30;
+  border-bottom: 1px solid #36344e;
+  padding: 0.5rem 2rem;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  @media (min-width: 900px) {
+    padding: 0.5rem 4rem;
+  }  
 `;
 const Card = styled.div`
   position: relative;
@@ -138,6 +148,14 @@ const UploadIconStyle = styled(UploadIcon)`
   height: 50px;
   margin-bottom: 10px;
   cursor: pointer;
+`;
+
+const Main = styled.div`
+  padding: 2rem;
+
+  @media (min-width: 900px) {
+    padding: 4rem;
+  }  
 `;
 
 const openNotificationWithIcon = (type, label, sub, description) => {
@@ -352,7 +370,7 @@ class App extends Component {
     ));
 
     return (
-      <BodyWrapper id="nav">
+      <BodyWrapper id="top">
         <NavBar>
           <p style={{ margin: 0 }}>reddit</p>
           {!showInitialSetup ? (
@@ -416,14 +434,14 @@ class App extends Component {
           </div>
         )
           : (
-            <div className="App">
+            <Main>
               <SubsWrapper>
                 {this.displaySubs()}
               </SubsWrapper>
               <BottomWrapper>
-                <a href="#nav"><UploadIconStyle /></a>
+                <a href="#top"><UploadIconStyle /></a>
               </BottomWrapper>
-            </div>
+            </Main>
           )
         }
       </BodyWrapper>
