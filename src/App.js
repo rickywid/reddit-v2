@@ -11,25 +11,31 @@ import SettingsTab from './components/settingsTab';
 import defaultData from './data/data';
 import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
 import FetchReddit from './services/fetchReddit';
+import { ReactComponent as UploadIcon } from './assets/icons/upload.svg';
 
 let id = 1;
 
 library.add(faTimes);
 
 const BodyWrapper = styled.div`
-  padding: 1rem;
   overflow: hidden;
-  
-  @media (min-width: 500px) {
-    padding: 2rem 4rem;  
-  }
 `;
 const NavBar = styled.nav`
   color: white;
-  font-size: 48px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between; 
+  background: #201f30;
+  border-bottom: 1px solid #36344e;
+  padding: 0.5rem 2rem;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  @media (min-width: 900px) {
+    padding: 0.5rem 4rem;
+  }  
 `;
 const Card = styled.div`
   position: relative;
@@ -120,7 +126,32 @@ const SectionWrapper = styled.div`
       width: 1200px;
   }  
 `;
+
 const SubsWrapper = styled.div``;
+
+const BottomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  position: fixed;
+  bottom: 20px;
+  right 20px;
+}
+`;
+
+const UploadIconStyle = styled(UploadIcon)`
+  height: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+const Main = styled.div`
+  padding: 2rem;
+
+  @media (min-width: 900px) {
+    padding: 4rem;
+  }  
+`;
 
 const openNotificationWithIcon = (type, label, sub, description) => {
   notification[type]({
@@ -142,6 +173,7 @@ class App extends Component {
       invalidSubreddits: [],
       subredditsData: [], // JSON data
       showInitialSetup: true,
+      sidebarIsOpen: false,
     };
   }
 
@@ -265,7 +297,7 @@ class App extends Component {
     return JSON.parse(localStorage.getItem('subreddits')).map((subreddit, key) => (
       <SubReddit
         key={subreddit}
-        id={key}
+        id={subreddit}
         data={subredditsData[key]}
         data2={JSON.parse(localStorage.getItem('subreddits'))}
       />
@@ -282,6 +314,15 @@ class App extends Component {
       </SubredditList>
     </SubredditSuggestions>
   );
+
+  generateColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
   render = () => {
     const {
@@ -324,7 +365,7 @@ class App extends Component {
     ));
 
     return (
-      <BodyWrapper>
+      <BodyWrapper id="top">
         <NavBar>
           <p style={{ margin: 0 }}>reddit</p>
           {!showInitialSetup ? (
@@ -388,11 +429,14 @@ class App extends Component {
           </div>
         )
           : (
-            <div className="App">
+            <Main>
               <SubsWrapper>
                 {this.displaySubs()}
               </SubsWrapper>
-            </div>
+              <BottomWrapper>
+                <a href="#top"><UploadIconStyle /></a>
+              </BottomWrapper>
+            </Main>
           )
         }
       </BodyWrapper>

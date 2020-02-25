@@ -1,6 +1,8 @@
 body {
-  background: #121224 !important;
+  	background: #121224 !important;
 	padding-bottom: 8rem;
+	font-family: 'Spartan' !important ;
+	font-size: 14px !important;
 }
 
 .dynamic-delete-button {
@@ -92,7 +94,6 @@ body {
 
 .ant-drawer-wrapper-body:after{
 	content: '';
-	background: url(./assets/icons/moon.svg) -50px 0;
 	background-repeat: repeat;
 	position: absolute;
 	height: 300px;
@@ -116,17 +117,9 @@ body {
 	transform: rotate(-135deg);
 }
 
-.manage-btn {
-	z-index: 1;
-	position: fixed !important;
-	top: 35px !important;
-	right: 20px !important;
-}
 
-@media only screen and (min-width: 500px) {
-	.manage-btn {
-		top: 47px !important;
-		right: 4rem !important;
+@media (min-width: 900px) {
+	body {
+	  font-size: 16x !important;
 	}
-}
-
+  } 

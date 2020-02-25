@@ -15,6 +15,8 @@ const Wrapper = styled.div`
   h2 {
     color: #f60261;
     display: inline-block;
+    font-weight: bold;
+    transition: color .2s;
 
     &:hover {
       color: #f602616e;
@@ -32,6 +34,7 @@ const List = styled.ul`
 `;
 const ListItem = styled.li`
   list-style: none;
+  margin-bottom: 0.3rem;
 
   a {
     color: white;
@@ -60,16 +63,21 @@ class SubReddit extends Component {
     return (
       <ListItem key={key}>
         <a className={`subreddit-topic__link ${isStickied}`} href={data.data.url} target="_blank" rel="noopener noreferrer">{data.data.title}</a>
+        &nbsp;
         <small>
           by
           <a href={`https://reddit.com/u/${data.data.author}`}>
+            &nbsp;
             {data.data.author}
           </a>
         </small>
+        &nbsp;
         <small>{moment(data.data.created_utc * 1000).fromNow()}</small>
+        &nbsp;
         <small style={{ marginRight: '1rem' }}>
           <a href={`https://reddit.com${data.data.permalink}`}>
             {data.data.num_comments}
+            &nbsp;
             comments
           </a>
         </small>
@@ -81,14 +89,14 @@ class SubReddit extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, id } = this.props;
 
     if (!data) {
       return <div />;
     }
 
     return (
-      <Wrapper className="animated fadeIn">
+      <Wrapper id={id} className="animated fadeIn">
         <a className="subreddit-title" href={`https://reddit.com/${data[0].data.subreddit}`}>
           <h2>{data[0].data.subreddit}</h2>
         </a>
@@ -101,7 +109,15 @@ class SubReddit extends Component {
 }
 
 SubReddit.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.shape({ data: PropTypes.shape({}) })])),
+  data: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.shape({
+      data: PropTypes.shape(
+        {
+          subreddit: PropTypes.string,
+        },
+      ),
+    })])),
+  id: PropTypes.string.isRequired,
 };
 
 SubReddit.defaultProps = {

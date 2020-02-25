@@ -12,11 +12,17 @@ import {
   Form,
   Icon,
   message,
+  Dropdown,
+  Menu,
 } from 'antd';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 library.add(faCog, faPlus, faCheck, faTimes);
 
+const ManageButton = styled(Button)`
+  margin-right: 20px;
+`;
 
 class SettingsTab extends Component {
   constructor(props) {
@@ -91,7 +97,7 @@ class SettingsTab extends Component {
   displayInput(subreddit, key) {
     return (
       <div key={key} style={{ zIndex: 1, position: 'relative' }}>
-        <input className="new-sub__input animated fadeIn" style={{ padding: '8px', marginBottom: '1rem', marginRight: '10px' }} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required />
+        <input className="new-sub__input animated fadeIn" style={{ padding: '8px', marginBottom: '1rem', marginRight: '10px', width: '85%' }} name={key} value={subreddit} placeholder="subreddit" onChange={this.handleChange} required />
         <Icon
           className="dynamic-delete-button"
           type="minus-circle-o"
@@ -113,11 +119,29 @@ class SettingsTab extends Component {
   render() {
     const { visible, updatedSubs } = this.state;
 
+    const menu = (
+      <Menu>
+        {
+        updatedSubs.map((sub, i) => (
+          <Menu.Item key={i}>
+            <a href={`#${sub}`}>{sub}</a>
+          </Menu.Item>
+        ))
+        }
+      </Menu>
+    );
+
     return (
       <div style={{ lineHeight: 0 }}>
-        <Button className="manage-btn" type="primary" onClick={this.showDrawer}>
+        <ManageButton className="manage-btn" type="primary" onClick={this.showDrawer}>
           Manage
-        </Button>
+        </ManageButton>
+        <Dropdown overlay={menu}>
+          <Button type="primary">
+            My List
+            <Icon type="down" />
+          </Button>
+        </Dropdown>
         <Drawer
           title="Manage Subreddits"
           placement="right"
