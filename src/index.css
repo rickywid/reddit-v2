@@ -94,7 +94,6 @@ body {
 
 .ant-drawer-wrapper-body:after{
 	content: '';
-	background: url(./assets/icons/moon.svg) -50px 0;
 	background-repeat: repeat;
 	position: absolute;
 	height: 300px;
