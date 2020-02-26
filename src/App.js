@@ -30,7 +30,7 @@ const NavBar = styled.nav`
   justify-content: space-between; 
   background: #201f30;
   border-bottom: 1px solid #36344e;
-  padding: 0.5rem 2rem;
+  padding: 1rem;
   position: fixed;
   width: 100%;
   z-index: 1;
@@ -138,7 +138,7 @@ const CircleIconStyle = styled(CircleIcon)`
 
 
 const Main = styled.div`
-  padding: 2rem;
+  padding: 5rem 2rem;
 
   @media (min-width: 900px) {
     padding: 4rem;
