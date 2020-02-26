@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "48ba381c1a7d1c933dc4",
+    "revision": "2f565c461e75ebf7841e",
     "url": "/reddit-v2/static/css/main.e365c7bd.chunk.css"
   },
   {
-    "revision": "48ba381c1a7d1c933dc4",
-    "url": "/reddit-v2/static/js/main.48ba381c.chunk.js"
+    "revision": "2f565c461e75ebf7841e",
+    "url": "/reddit-v2/static/js/main.2f565c46.chunk.js"
   },
   {
     "revision": "8859d0522f7359347231",
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/reddit-v2/static/media/falling-star.2b21363c.svg"
   },
   {
-    "revision": "c6913961a3199a88e27d855ed398e8d5",
+    "revision": "f5c817ffbf38187f5046a94065ae1695",
     "url": "/reddit-v2/index.html"
   }
 ];
