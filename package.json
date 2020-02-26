@@ -1,7 +1,7 @@
 {
   "name": "reddit-v2",
   "version": "0.1.0",
-  "homepage": "https://rickywid.github.io/reddit-v2",
+  "homepage": "https://rickywid.github.io/dash",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.2",
