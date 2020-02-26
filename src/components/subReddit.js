@@ -97,7 +97,7 @@ class SubReddit extends Component {
 
     return (
       <Wrapper id={id} className="animated fadeIn">
-        <a className="subreddit-title" href={`https://reddit.com/${data[0].data.subreddit}`}>
+        <a className="subreddit-title" href={`https://reddit.com/r/${data[0].data.subreddit}`}>
           <h2>{data[0].data.subreddit}</h2>
         </a>
         <List>
