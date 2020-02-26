@@ -1,8 +1,9 @@
 body {
-  	background: #121224 !important;
+  	background: #f2f2f2 !important;
 	padding-bottom: 8rem;
 	font-family: 'Spartan' !important ;
 	font-size: 14px !important;
+	min-height: 100%;
 }
 
 .dynamic-delete-button {
@@ -18,7 +19,7 @@ body {
 }
 
 .dynamic-delete-button svg {
-	fill: #fdcb01;
+	fill: #dc678a;
 }
 
 .dynamic-delete-button[disabled] {
@@ -37,9 +38,9 @@ body {
   background: #f602616e !important;
 }
 
-.ant-form {
+/* .ant-form {
 	padding: 0 2rem !important;
-}
+} */
 
 .ant-form-explained {
 	width: 65%;
@@ -54,7 +55,7 @@ body {
 }
 
 .stickied {
-	color: yellow !important;
+	color: #00778b !important;
 	font-weight: bold;
 }
 
@@ -63,16 +64,21 @@ body {
 }
 
 .fa-star {
-	color: yellow;
+	color: #6a7305;
 }
 
 .fa-video, .fa-image {
 	color: #f60261;
 }
 
+.ant-drawer-content-wrapper {
+	border-left: 1px solid #36344e !important;
+}
+
 .ant-drawer-header {
 	background-color: #f60261 !important;
 	border-bottom: none !important;
+	border-radius: 0 !important;
 }
 
 .anticon-close {
@@ -85,7 +91,7 @@ body {
 }
 
 .ant-drawer-wrapper-body {
-	background: #121224 !important;
+	background: #f5f5f5 !important;
 }
 
 .ant-drawer-wrapper .new-sub__input {
@@ -103,20 +109,12 @@ body {
 	bottom: -108px;
 }
 
-.x:after {
-	content: '';
-	background: url(./assets/icons/falling-star.svg);
-	display: inline-block;
-	height: 45px;
-	background-size: 45px 45px;
-	background-repeat: no-repeat;
-	width: 45px;
-	margin-left: 25px;
-	position: absolute;
-	top: 15px;
-	transform: rotate(-135deg);
+.has-error .ant-form-explain, 
+.has-error .ant-form-split {
+	margin: 0;
+	color: #3d3d3d !important;
+	font-size: 12px;
 }
-
 
 @media (min-width: 900px) {
 	body {

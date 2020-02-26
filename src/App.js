@@ -8,10 +8,12 @@ import {
 import PropTypes from 'prop-types';
 import SubReddit from './components/subReddit';
 import SettingsTab from './components/settingsTab';
-import defaultData from './data/data';
-import { ReactComponent as RocketSVG } from './assets/icons/project.svg';
 import FetchReddit from './services/fetchReddit';
 import { ReactComponent as UploadIcon } from './assets/icons/upload.svg';
+import { ReactComponent as CubesIcon } from './assets/icons/cubes.svg';
+import { ReactComponent as LayersIcon } from './assets/icons/layers.svg';
+import { ReactComponent as PuzzleIcon } from './assets/icons/puzzle.svg';
+import { ReactComponent as CircleIcon } from './assets/icons/circle.svg';
 
 let id = 1;
 
@@ -37,42 +39,41 @@ const NavBar = styled.nav`
     padding: 0.5rem 4rem;
   }  
 `;
+const NavbarLogo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Card = styled.div`
   position: relative;
-  background: #f60261;
-  border-radius: 5px;
-  box-shadow: 0 1px 7px 1px rgba(0,0,0,.4);
+  background: #24c7df6e;
+  // border-radius: 5px;
+  // box-shadow: 0 1px 7px 1px rgba(0,0,0,.4);
   margin-bottom: 3rem;
-  flex-basis: 45%;
+  flex: 1;
+  display: flex;
 
   @media (min-width: 500px) {
     margin-bottom: 0;
   }  
 `;
-const CardHeader = styled.div`
-  background: #250448 none repeat scroll 0% 0%;
-  padding: 1.5rem 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px 0px rgba(0,0,0,.5);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-
-  svg {
-    height: 50px; 
-    position: absolute;
-    right: -49px;
-    transform: rotate(-111deg); 
-    top: 11px;
-
-    @media (min-width: 500px) {
-      right: 36px;
-    }    
-  }
-`;
-const SubredditSuggestionsWrapper = styled.div`
+const CardInner = styled.div`
   display: flex;
   flex-direction: column;
-  flex-basis: 45%;
+  margin: auto;
+`;
+const RightColumn = styled.div`
+  display: flex;
+  flex: 1;
+`;
+const RightColumnInner = styled.div`
+  margin: auto;
+  align-items: center;
+  padding: 3rem;
+
+  @media (min-width: 500px) {
+    padding: 14rem;
+  }
 `;
 const SubredditSuggestions = styled.div`
   flex-grow: 1;
@@ -95,37 +96,6 @@ const SubredditItem = styled.li`
     cursor: pointer;
   }
 `;
-const SubredditSuggestHeader = styled.p`
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 2rem;
-`;
-const SubredditListWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-self: flex-start;
-`;
-const SectionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  margin: 0 auto;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
-  padding: 1rem;
-  background: white;
-  border-radius: 5px;
-  justify-content: space-between;
-  
-  @media (min-width: 900px) {
-    flex-direction: row;
-    padding: 4rem;
-    border: 27px solid #250448;
-      width: 1200px;
-  }  
-`;
 
 const SubsWrapper = styled.div``;
 
@@ -145,6 +115,28 @@ const UploadIconStyle = styled(UploadIcon)`
   cursor: pointer;
 `;
 
+const LayersIconStyle = styled(LayersIcon)`
+  height: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+const CubesIconStyle = styled(CubesIcon)`
+  height: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+const PuzzleIconStyle = styled(PuzzleIcon)`
+  height: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+const CircleIconStyle = styled(CircleIcon)`
+  height: 25px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+`;
+
+
 const Main = styled.div`
   padding: 2rem;
 
@@ -153,6 +145,46 @@ const Main = styled.div`
   }  
 `;
 
+const LandingPage = styled.div`
+  height: 100vh;
+  display: flex;
+  padding-top: 53px;
+
+  flex-direction: column;
+  width: auto;
+  // margin: 0 auto;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+  // padding: 1rem;
+  background: white;
+  // border-radius: 5px;
+  justify-content: space-between;
+  position: relative;
+  flex: 1;
+  
+  @media (min-width: 900px) {
+    flex-direction: row;
+    // padding: 4rem;
+    // border: 27px solid #250448;
+    // width: 1200px;
+  }  
+`;
+const FeaturesList = styled.ul`
+  padding: 0;
+  margin-top: 3rem;
+`;
+const FeaturesListItem = styled.li`
+  list-style: none;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 1rem;
+  }
+
+  p {
+    margin: 0;
+  }
+`;
 const openNotificationWithIcon = (type, label, sub, description) => {
   notification[type]({
     message: `${label}`,
@@ -315,15 +347,6 @@ class App extends Component {
     </SubredditSuggestions>
   );
 
-  generateColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
   render = () => {
     const {
       form: {
@@ -350,7 +373,7 @@ class App extends Component {
             message: 'Required',
           }],
         })(
-          <Input placeholder="e.g: showerthoughts" style={{ width: '75%', marginRight: 8 }} />,
+          <Input placeholder="e.g: showerthoughts" style={{ width: '88%', marginRight: 8 }} />,
         )}
         {keys.length > 1 ? (
           <Icon
@@ -367,7 +390,10 @@ class App extends Component {
     return (
       <BodyWrapper id="top">
         <NavBar>
-          <p style={{ margin: 0 }}>reddit</p>
+          <NavbarLogo>
+            <CircleIconStyle />
+            <p style={{ margin: 0 }}>dash</p>
+          </NavbarLogo>
           {!showInitialSetup ? (
             <SettingsTab
               subreddits={JSON.parse(localStorage.getItem('subreddits'))}
@@ -379,54 +405,49 @@ class App extends Component {
         </NavBar>
 
         {showInitialSetup ? (
-          <div className="animated fadeIn">
-            <SectionWrapper style={{ position: 'relative' }}>
-              <Card>
-                <CardHeader>
-                  <p
-                    className="x"
-                    style={{
-                      fontWeight: 'bold', color: 'white', fontSize: '1.5rem', marginBottom: 0,
-                    }}
-                  >
-                    Lets Get Started
-                  </p>
-                  <p style={{
-                    color: '#ccc', margin: 0, padding: 0, fontSize: 12,
-                  }}
-                  >
-                    Start adding some of your favourite subreddits
-                  </p>
-                </CardHeader>
+          <LandingPage className="animated fadeIn">
+            <Card>
+              <CardInner>
+                <h2 style={{ marginBottom: '2rem' }}>Let&apos;s Begin.</h2>
                 <Form onSubmit={this.handleSubmit}>
                   {formItems}
                   <Form.Item style={{ display: 'inline-block', marginRight: '1rem' }}>
                     <Button type="dashed" onClick={this.add}>
                       <Icon type="plus" />
-                      Add Subreddit
+                      New
                     </Button>
                   </Form.Item>
                   <Form.Item style={{ display: 'inline-block' }}>
                     <Button htmlType="submit">Submit</Button>
                   </Form.Item>
                 </Form>
-              </Card>
-              <SubredditSuggestionsWrapper>
-                <SubredditSuggestHeader>
-                  New to
-                  <a href="https://reddit.com">Reddit</a>
-                  ? Explore some of the popular subreddits
-                </SubredditSuggestHeader>
-                <SubredditListWrapper>
-                  {defaultData.map((list, index) => this.renderList(list, index))}
-                </SubredditListWrapper>
-              </SubredditSuggestionsWrapper>
-              <RocketSVG style={{
-                position: 'absolute', right: -100, bottom: -50, height: 200, width: 'auto',
-              }}
-              />
-            </SectionWrapper>
-          </div>
+                <small>
+                  Are you new to Reddit? View their&nbsp;
+                  <a href="https://reddit.com" target="_blank" rel="noopener noreferrer">website</a>
+                </small>
+              </CardInner>
+            </Card>
+            <RightColumn>
+              <RightColumnInner>
+                <h2 style={{ fontWeight: 'bolder', fontSize: '32px' }}>Discover today&apos;s discussion</h2>
+                <p>Stay up to date with the latest news and discussions by adding your favourite subreddits.</p>
+                <FeaturesList>
+                  <FeaturesListItem>
+                    <LayersIconStyle />
+                    <p>View your favourite subreddits</p>
+                  </FeaturesListItem>
+                  <FeaturesListItem>
+                    <CubesIconStyle />
+                    <p>Customize and manage your list</p>
+                  </FeaturesListItem>
+                  <FeaturesListItem>
+                    <PuzzleIconStyle />
+                    <p>Fast, easy and convenient</p>
+                  </FeaturesListItem>
+                </FeaturesList>
+              </RightColumnInner>
+            </RightColumn>
+          </LandingPage>
         )
           : (
             <Main>

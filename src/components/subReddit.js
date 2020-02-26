@@ -37,18 +37,18 @@ const ListItem = styled.li`
   margin-bottom: 0.3rem;
 
   a {
-    color: white;
+    color: #242424;
 
     &:hover {
-      color: yellow;
+      color: #971d4b;
     }
   }
   small {
-    color: #fdcb01; 
+    color: #a48710; 
     font-weight: bold
 
     a {
-      color: #00ebea;
+      color: #a0003e;
     }
   }
 `;
@@ -125,3 +125,5 @@ SubReddit.defaultProps = {
 };
 
 export default SubReddit;
+
+// ["thinkpad","linux","fedora","linux4noobs","toronto","askto","webdev","cscareerquestions","battlestations","unixporn","bicycling","fixedgearbicycle","unemployed","getemployed","ubereats","photography","askphotography","cameras"]
