@@ -47,13 +47,11 @@ const NavbarLogo = styled.div`
 const Card = styled.div`
   position: relative;
   background: #24c7df6e;
-  // border-radius: 5px;
-  // box-shadow: 0 1px 7px 1px rgba(0,0,0,.4);
   margin-bottom: 3rem;
   flex: 1;
   display: flex;
 
-  @media (min-width: 500px) {
+  @media (min-width: 900px) {
     margin-bottom: 0;
   }  
 `;
@@ -71,8 +69,8 @@ const RightColumnInner = styled.div`
   align-items: center;
   padding: 3rem;
 
-  @media (min-width: 500px) {
-    padding: 14rem;
+  @media (min-width: 900px) {
+    
   }
 `;
 const SubredditSuggestions = styled.div`
@@ -149,23 +147,16 @@ const LandingPage = styled.div`
   height: 100vh;
   display: flex;
   padding-top: 53px;
-
   flex-direction: column;
   width: auto;
-  // margin: 0 auto;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
-  // padding: 1rem;
   background: white;
-  // border-radius: 5px;
   justify-content: space-between;
   position: relative;
   flex: 1;
   
   @media (min-width: 900px) {
     flex-direction: row;
-    // padding: 4rem;
-    // border: 27px solid #250448;
-    // width: 1200px;
   }  
 `;
 const FeaturesList = styled.ul`
@@ -430,7 +421,7 @@ class App extends Component {
             <RightColumn>
               <RightColumnInner>
                 <h2 style={{ fontWeight: 'bolder', fontSize: '32px' }}>Discover today&apos;s discussion</h2>
-                <p>Stay up to date with the latest news and discussions by adding your favourite subreddits.</p>
+                <p style={{ width: '80%' }}>Stay up to date with the latest news and discussions by adding your favourite subreddits.</p>
                 <FeaturesList>
                   <FeaturesListItem>
                     <LayersIconStyle />

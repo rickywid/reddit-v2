@@ -126,4 +126,4 @@ SubReddit.defaultProps = {
 
 export default SubReddit;
 
-// ["thinkpad","linux","fedora","linux4noobs","toronto","askto","webdev","cscareerquestions","battlestations","unixporn","bicycling","fixedgearbicycle","unemployed","getemployed","ubereats","photography","askphotography","cameras"]
+// ["thinkpad","linux","fedora","linux4noobs","toronto","askto","webdev","cscareerquestions","battlestations","unixporn","bicycling","fixedgearbicycle","unemployed","getemployed","ubereats","photography","askphotography","cameras","funny","streetphotography","experienceddevs"]
