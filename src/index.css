@@ -20,6 +20,7 @@ body {
 
 .dynamic-delete-button svg {
 	fill: #dc678a;
+	height: 17px;
 }
 
 .dynamic-delete-button[disabled] {

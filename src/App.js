@@ -19,9 +19,8 @@ let id = 1;
 
 library.add(faTimes);
 
-const BodyWrapper = styled.div`
-  overflow: hidden;
-`;
+const BodyWrapper = styled.div``;
+
 const NavBar = styled.nav`
   color: white;
   font-size: 24px;
@@ -50,27 +49,40 @@ const Card = styled.div`
   margin-bottom: 3rem;
   flex: 1;
   display: flex;
+  padding: 2rem 1rem;
 
   @media (min-width: 900px) {
     margin-bottom: 0;
+    text-align: initial;
   }  
 `;
 const CardInner = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
+  width: 75%;
+  padding: 1rem;
+  text-align: center;
+
+  @media (min-width: 900px) {
+    text-align: initial;
+  }
 `;
 const RightColumn = styled.div`
   display: flex;
   flex: 1;
+  background: white;
 `;
 const RightColumnInner = styled.div`
   margin: auto;
   align-items: center;
-  padding: 3rem;
+  padding: 1rem 2rem;
+  text-align: center;
+
 
   @media (min-width: 900px) {
-    
+    padding: 3rem;
+    text-align: initial;
   }
 `;
 const SubredditSuggestions = styled.div`
@@ -146,7 +158,7 @@ const Main = styled.div`
 const LandingPage = styled.div`
   height: 100vh;
   display: flex;
-  padding-top: 53px;
+  padding-top: 69px;
   flex-direction: column;
   width: auto;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
@@ -157,11 +169,17 @@ const LandingPage = styled.div`
   
   @media (min-width: 900px) {
     flex-direction: row;
+    padding-top: 53px;
   }  
 `;
 const FeaturesList = styled.ul`
   padding: 0;
   margin-top: 3rem;
+  display: inline-block;
+
+  @media (min-width: 900px) {
+    display: block;
+  } 
 `;
 const FeaturesListItem = styled.li`
   list-style: none;
@@ -174,6 +192,19 @@ const FeaturesListItem = styled.li`
 
   p {
     margin: 0;
+  }
+`;
+const Header = styled.div`
+  font-weight: bolder;
+  font-size: 24px;
+
+  @media (min-width: 900px) {
+    font-size: 32px;
+  }
+`;
+const SubHeader = styled.p`
+  @media (min-width: 900px) {
+    width: 80%;
   }
 `;
 const openNotificationWithIcon = (type, label, sub, description) => {
@@ -364,7 +395,7 @@ class App extends Component {
             message: 'Required',
           }],
         })(
-          <Input placeholder="e.g: showerthoughts" style={{ width: '88%', marginRight: 8 }} />,
+          <Input placeholder="e.g: showerthoughts" style={{ width: '89%' }} />,
         )}
         {keys.length > 1 ? (
           <Icon
@@ -402,26 +433,28 @@ class App extends Component {
                 <h2 style={{ marginBottom: '2rem' }}>Let&apos;s Begin.</h2>
                 <Form onSubmit={this.handleSubmit}>
                   {formItems}
-                  <Form.Item style={{ display: 'inline-block', marginRight: '1rem' }}>
-                    <Button type="dashed" onClick={this.add}>
-                      <Icon type="plus" />
-                      New
-                    </Button>
-                  </Form.Item>
-                  <Form.Item style={{ display: 'inline-block' }}>
-                    <Button htmlType="submit">Submit</Button>
-                  </Form.Item>
+                  <div className="form-input-group">
+                    <Form.Item style={{ display: 'inline-block', marginRight: '1rem' }}>
+                      <Button type="dashed" onClick={this.add}>
+                        <Icon type="plus" />
+                        New
+                      </Button>
+                    </Form.Item>
+                    <Form.Item style={{ display: 'inline-block' }}>
+                      <Button type="primary" htmlType="submit">Submit</Button>
+                    </Form.Item>
+                  </div>
                 </Form>
                 <small>
-                  Are you new to Reddit? View their&nbsp;
+                  Are you new to Reddit? Browse their&nbsp;
                   <a href="https://reddit.com" target="_blank" rel="noopener noreferrer">website</a>
                 </small>
               </CardInner>
             </Card>
             <RightColumn>
               <RightColumnInner>
-                <h2 style={{ fontWeight: 'bolder', fontSize: '32px' }}>Discover today&apos;s discussion</h2>
-                <p style={{ width: '80%' }}>Stay up to date with the latest news and discussions by adding your favourite subreddits.</p>
+                <Header>Discover today&apos;s discussion</Header>
+                <SubHeader>Stay up to date with the latest news and discussions by adding your favourite subreddits.</SubHeader>
                 <FeaturesList>
                   <FeaturesListItem>
                     <LayersIconStyle />
