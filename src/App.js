@@ -158,7 +158,7 @@ const Main = styled.div`
 const LandingPage = styled.div`
   height: 100vh;
   display: flex;
-  padding-top: 69px;
+  padding-top: 68px;
   flex-direction: column;
   width: auto;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
